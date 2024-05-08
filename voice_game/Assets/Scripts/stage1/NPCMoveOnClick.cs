@@ -27,7 +27,10 @@ public class NPCMoveOnClick : MonoBehaviour
     public GameObject microphone_icon;
     public GameObject fairy;
     public GameObject arrow02;
-    
+    public GameObject star1;
+    public GameObject star2;
+    public GameObject star3;
+
 
     public TextMeshProUGUI fairy_text;
     public TextMeshProUGUI line;
@@ -35,7 +38,6 @@ public class NPCMoveOnClick : MonoBehaviour
     public TextMeshProUGUI loud;
     public TextMeshProUGUI quiet;
     public TextMeshProUGUI next_fairy_text;
-    public TextMeshProUGUI end_text;
 
 
     void Start()
@@ -152,6 +154,19 @@ public class NPCMoveOnClick : MonoBehaviour
                 else // 데시벨 값이 적절한 경우
                 {
                     ScoreManager.instance.AddScore(1);
+                    int stagescore = ScoreManager.instance.GetTotalScore();
+                    if (stagescore == 1) 
+                    {
+                        star1.GetComponent<Renderer>().enabled = true;
+                    }
+                    else if (stagescore == 2)
+                    {
+                        star2.GetComponent<Renderer>().enabled = true;
+                    }
+                    else
+                    {
+                        star3.GetComponent<Renderer>().enabled = true;
+                    }
                     TriggerEvent_Appropriate();
                 }
             }
