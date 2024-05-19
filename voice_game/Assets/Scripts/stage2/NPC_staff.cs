@@ -17,6 +17,8 @@ public class NPC_staff : MonoBehaviour
     private bool isSoft1 = false;
     private bool isSoft2 = false;
 
+    private int drink_num = 0;
+
 
     //오브젝트
     public GameObject staff_bubble1;
@@ -32,8 +34,11 @@ public class NPC_staff : MonoBehaviour
     public GameObject customer_angry;
     public GameObject customer_bubble;
     public GameObject retry_button;
+    public GameObject arrow;
 
     public GameObject[] drinkObjects; // 음료 오브젝트 배열
+    public GameObject[] drinks;
+    public TextMeshProUGUI[] drinks_t;
 
     //텍스트
     public TextMeshProUGUI staff_line1; // 주문
@@ -43,10 +48,14 @@ public class NPC_staff : MonoBehaviour
     public TextMeshProUGUI line1; // 초코우유
     public TextMeshProUGUI line2; // 따뜻한 걸로
     public TextMeshProUGUI fairy1;
+    public TextMeshProUGUI fairy2;
+    public TextMeshProUGUI fairy3;
     public TextMeshProUGUI wait; // 기다리는 중
     public TextMeshProUGUI customer_line;
     public TextMeshProUGUI cafe_board;
     public TextMeshProUGUI retry;
+    public TextMeshProUGUI staff_bad1;
+    public TextMeshProUGUI staff_bad2;
 
     //오디오
     public AudioSource staff_audio1;
@@ -78,6 +87,7 @@ public class NPC_staff : MonoBehaviour
     private void OnMouseDown()
     {
         // 어서오세요 주문하시겠어요? 소리&말풍선 출력
+        arrow.GetComponent<Renderer>().enabled = false;
         staff_bubble1.GetComponent<Renderer>().enabled = true; // 말풍선
         if (turn == 0)
             staff_line1.GetComponent<TextMeshProUGUI>().enabled = true; //텍스트
@@ -85,8 +95,8 @@ public class NPC_staff : MonoBehaviour
             staff_line2.GetComponent<TextMeshProUGUI>().enabled = true;
         if (turn == 0) 
             staff_audio1.Play(); //오디오
-        else
-            staff_audio1.Play(); //오디오 2로 수정 필요****************************************************
+        //else
+            //staff_audio1.Play(); //오디오 2로 수정 필요****************************************************
         StartCoroutine(StartRecordingAfterAudioEnds(staff_audio1.clip.length + 1.0f));//오디오 끝날때까지
     }
 
@@ -143,7 +153,7 @@ public class NPC_staff : MonoBehaviour
                 averageDb = sumDb / countDb; // 0이 아닌 값의 평균 데시벨 값 계산
                 UnityEngine.Debug.Log("average :"+averageDb);
             }
-            if (averageDb < 30) 
+            if (averageDb < 20) 
             {
                 if (turn == 1)
                 {
@@ -157,7 +167,7 @@ public class NPC_staff : MonoBehaviour
                 }
                 
             }
-            else if (averageDb > 35) 
+            else if (averageDb > 50) 
             {
                 TriggerEvent_loud(); // turn 상관없이
             }
@@ -201,19 +211,23 @@ public class NPC_staff : MonoBehaviour
         if (isSoft1 == true && isSoft2 == true) 
         {
             //차가운 딸기
+            drink_num = 0;
         }
         else if (isSoft1 == true && isSoft2 == false)
         {
             //따뜻한 딸기
+            drink_num = 1;
         }
-        else if (isSoft1 == false && !isSoft2 == true)
+        else if (isSoft1 == false && isSoft2 == true)
         {
             //차가운 초코
+            drink_num = 2;
         }
         else
         {
-            TriggerEvent_good(); // 따뜻한 초코
+            drink_num = 3;
         }
+        
     }
 
     IEnumerator ShowDrinksSequentially()
@@ -231,7 +245,8 @@ public class NPC_staff : MonoBehaviour
         blank_image.GetComponent<Renderer>().enabled = false;
         wait.GetComponent<TextMeshProUGUI>().enabled = false;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = true;
-
+        staff_bubble1.GetComponent<Renderer>().enabled = false; // 말풍선
+        StartCoroutine(Get_drink(1.0f));
     }
 
     void TriggerEvent_loud() // 시끄러우니 나가주세욧
@@ -275,24 +290,60 @@ public class NPC_staff : MonoBehaviour
         staff_line4.GetComponent<TextMeshProUGUI>().enabled = false; //텍스트
         staff_smile.GetComponent<Renderer>().enabled = true;
         staff_sad.GetComponent<Renderer>().enabled = false;
+        
 
         turn = 0;
         isSoft1 = false;
         isSoft2 = false;
     }
 
-    
-    void TriggerEvent_TooSoft() // 다른 음료 나옴
+    IEnumerator Get_drink(float waitTime)
     {
-        // 다른 음료 나옴, 주문하신 딸기우유 나왔습니다~
-        // 네? 핫초코 주문했다구요?
-        // 요정 : 목소리가 너무 작아서 잘 안들렸나봐 다시 주문해보자~
-    }
-    
-    void TriggerEvent_good() // 적절한 음료 나옴
-    {
-        // 올바른 음료 나옴, 주문하신 핫초코 나왔습니다~
-        // 잘했어!
+        yield return new WaitForSeconds(waitTime);
+        // 음료 나옴
+        drinks[drink_num].SetActive(true); // 음료 이미지
+        drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = true; // 대사
+        staff_bubble1.GetComponent<Renderer>().enabled = true; // 말풍선
+        
+        if (drink_num == 3)
+        {
+            StartCoroutine(TriggerEvent_good(5.0f)); // 적절
+        }
+        else
+        {
+            StartCoroutine(TriggerEvent_bad(4.0f));
+        }
     }
 
+    IEnumerator TriggerEvent_good(float waitTime) // 적절한 음료 나옴
+    {
+        yield return new WaitForSeconds(waitTime);
+        drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = false; // 대사
+        fairy.GetComponent<Renderer>().enabled = true;
+        blank.GetComponent<Renderer>().enabled = true;
+        //blank_image.GetComponent<Renderer>().enabled = true; 무지배경 깔지말지 고민
+        fairy2.GetComponent<TextMeshProUGUI>().enabled = true;
+    }
+
+    IEnumerator TriggerEvent_bad(float waitTime) // 부적절한 음료 나옴
+    {
+        yield return new WaitForSeconds(waitTime);
+        drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = false; // 대사
+        staff_bad1.GetComponent<TextMeshProUGUI>().enabled = true;
+
+        yield return new WaitForSeconds(4.0f);
+
+        staff_bad1.GetComponent<TextMeshProUGUI>().enabled = false;
+        staff_bad2.GetComponent<TextMeshProUGUI>().enabled = true;
+        staff_smile.GetComponent<Renderer>().enabled = false;
+        staff_sad.GetComponent<Renderer>().enabled = true;
+
+        yield return new WaitForSeconds(5.0f);
+        staff_bad2.GetComponent<TextMeshProUGUI>().enabled = false;
+        staff_bubble1.GetComponent<Renderer>().enabled = false; // 말풍선
+        fairy.GetComponent<Renderer>().enabled = true;
+        blank.GetComponent<Renderer>().enabled = true;
+        //blank_image.GetComponent<Renderer>().enabled = true; 무지배경 깔지말지 고민
+        fairy3.GetComponent<TextMeshProUGUI>().enabled = true;
+    }
 }
