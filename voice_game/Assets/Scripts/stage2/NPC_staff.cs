@@ -127,6 +127,8 @@ public class NPC_staff : MonoBehaviour
 
         if (!soundAnalyzer.isRecording) // 녹음 끝났는지 확인
         {
+            soundAnalyzer.ClearWarning();
+
             staff_bubble1.GetComponent<Renderer>().enabled = false; // 말풍선
             staff_line1.GetComponent<TextMeshProUGUI>().enabled = false; //텍스트
             staff_line2.GetComponent<TextMeshProUGUI>().enabled = false; //텍스트
@@ -290,7 +292,8 @@ public class NPC_staff : MonoBehaviour
         staff_line4.GetComponent<TextMeshProUGUI>().enabled = false; //텍스트
         staff_smile.GetComponent<Renderer>().enabled = true;
         staff_sad.GetComponent<Renderer>().enabled = false;
-        
+        arrow.GetComponent<Renderer>().enabled = true;
+
 
         turn = 0;
         isSoft1 = false;

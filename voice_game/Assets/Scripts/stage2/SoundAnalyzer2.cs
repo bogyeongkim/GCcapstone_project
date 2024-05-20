@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using System.IO;
+using System;
+using UnityEngine.UI;
 
 public class SoundAnalyzer2 : MonoBehaviour
 {
@@ -12,6 +14,13 @@ public class SoundAnalyzer2 : MonoBehaviour
     public int sampleRate = 44100; // 샘플링 속도
     public int bufferSize = 2048; // 버퍼 크기
     public FFTWindow fftWindow = FFTWindow.BlackmanHarris; // FFT 창 함수
+
+
+    //******************************************************경고 추가
+    public float warningThreshold = 70f;
+    public GameObject warningUI;
+    public Image screenOverlay;
+    private bool isWarningActive = false;
 
     public bool isRecording = false; // 녹음 상태 확인 flag
     float recordStartTime = 0f; // 녹음 시작 시간
@@ -120,8 +129,62 @@ public class SoundAnalyzer2 : MonoBehaviour
                 dbValues.Add(dbA);
 
                 UnityEngine.Debug.Log("[" + dbValues.Count + "]" + "dBA : " + dbA);
+
+                //*************************************************************경고 추가
+                if (dbA > warningThreshold)
+                {
+                    TriggerWarning();
+                }
             }
         }
+    }
+
+    void TriggerWarning()
+    {
+        //StartCoroutine(TriggerWarningUI());
+        Handheld.Vibrate(); // 진동오도록
+        StartCoroutine(FlashWarning()); // 화면 붉게 깜빡이도록
+    }
+
+    IEnumerator TriggerWarningUI()
+    {
+        if (warningUI != null)
+        {
+            warningUI.SetActive(true); // 경고 UI 오브젝트 표시
+            yield return new WaitForSeconds(0.5f); // 0.5초 동안 대기
+            warningUI.SetActive(false); // 경고 UI 오브젝트 비활성화
+        }
+    }
+
+    IEnumerator FlashWarning()
+    {
+        if (isWarningActive) // 화면 깜빡이는 중인지 확인
+        {
+            yield break;
+        }
+
+        isWarningActive = true; // 경고 상태 활성화
+
+        Color originalColor = screenOverlay.color;
+        Color warningColor = new Color(1, 0, 0, 0.2f);
+
+        screenOverlay.color = warningColor; // 반투명한 붉은색 화면으로
+        yield return new WaitForSeconds(0.3f);
+        screenOverlay.color = originalColor;
+        yield return new WaitForSeconds(0.3f);
+
+        isWarningActive = false; // 경고 상태 비활성화
+    }
+
+    public void ClearWarning()
+    {
+        if (warningUI != null)
+        {
+            warningUI.SetActive(false);
+        }
+
+        screenOverlay.color = new Color(0, 0, 0, 0); 
+        isWarningActive = false; 
     }
 
     void OnDisable()
