@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class CameraResolution : MonoBehaviour
 {
+    void Start()
+    {
+        Screen.SetResolution(1080, 1920, true);
+        Screen.SetResolution(Screen.width, (Screen.width * 16) / 9, true);
+    }
+
     private void Awake()
     {
         // 현재 GameObject에 부착된 Camera 컴포넌트를 가져오는 코드

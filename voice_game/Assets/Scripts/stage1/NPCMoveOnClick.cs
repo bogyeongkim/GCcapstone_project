@@ -37,6 +37,7 @@ public class NPCMoveOnClick : MonoBehaviour
     public TextMeshProUGUI response;
     public TextMeshProUGUI loud;
     public TextMeshProUGUI quiet;
+    public TextMeshProUGUI good;
     public TextMeshProUGUI next_fairy_text;
 
 
@@ -135,7 +136,7 @@ public class NPCMoveOnClick : MonoBehaviour
              */
             foreach (float dbValue in DBL)
             {
-                if (dbValue > 50) // 40보다 큰 값이 있는 경우
+                if (dbValue > 50) // 50보다 큰 값이 있는 경우
                 {
                     TriggerEvent_loud(); // 이벤트를 발생시킴
                     isLoud = true;
@@ -157,17 +158,17 @@ public class NPCMoveOnClick : MonoBehaviour
                     int stagescore = ScoreManager.instance.GetTotalScore();
                     if (stagescore == 1) 
                     {
-                        star1.GetComponent<Renderer>().enabled = true;
+                        star1.SetActive(true);
                     }
                     else if (stagescore == 2)
                     {
-                        star2.GetComponent<Renderer>().enabled = true;
+                        star2.SetActive(true);
                     }
                     else
                     {
-                        star3.GetComponent<Renderer>().enabled = true;
+                        star3.SetActive(true);
                     }
-                    TriggerEvent_Appropriate();
+                    TriggerEvent_good();
                 }
             }
         }
@@ -185,9 +186,17 @@ public class NPCMoveOnClick : MonoBehaviour
         StartCoroutine(WaitAndTriggerAppropriate(4.0f));// 3초 후 TriggerEvent_Appropriate 호출
     }
 
+    void TriggerEvent_good()
+    {
+        good.GetComponent<TextMeshProUGUI>().enabled = true;
+        fairy.GetComponent<Renderer>().enabled = true;
+        StartCoroutine(WaitAndTriggerAppropriate(4.0f));// 3초 후 TriggerEvent_Appropriate 호출
+    }
+
     IEnumerator WaitAndTriggerAppropriate(float waitTime)
     {
         yield return new WaitForSeconds(waitTime); // waitTime만큼 대기
+        good.GetComponent<TextMeshProUGUI>().enabled = false;
         loud.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy.GetComponent<Renderer>().enabled = false;
         
