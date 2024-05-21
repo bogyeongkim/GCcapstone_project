@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageAble
 {
-    public SoundAnalyzer soundAnalyzer; // SoundAnalyzer 스크립트 연결
+    public SoundAnalyzer3 SoundAnalyzer3; // SoundAnalyzer 스크립트 연결
     private UIManager uiManager; // UIManager 연결
 
     public float maxJumpPower = 20f; // 최대 점프 파워
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IDamageAble
     
     private void Start()
     {
-        soundAnalyzer = FindObjectOfType<SoundAnalyzer>();
+        SoundAnalyzer3 = FindObjectOfType<SoundAnalyzer3>();
         uiManager = FindObjectOfType<UIManager>();
         
         playerAnim = GetComponent<PlayerAnimation>();
@@ -48,7 +48,7 @@ public class Player : MonoBehaviour, IDamageAble
         // 바닥 체크
         CheckGrounded();
         
-        List<float> dbValues = soundAnalyzer.GetDbValues();
+        List<float> dbValues = SoundAnalyzer3.GetDbValues();
 
         if (dbValues.Count > 0)
         {
