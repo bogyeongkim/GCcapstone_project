@@ -8,9 +8,9 @@ public class Player : MonoBehaviour, IDamageAble
     public SoundAnalyzer3 SoundAnalyzer3; // SoundAnalyzer 스크립트 연결
     private UIManager uiManager; // UIManager 연결
 
-    public float maxJumpPower = 20f; // 최대 점프 파워
-    public float minJumpThreshold = 20f; // 최소 소리 임계치
-    public float groundCheckDistance = 0.1f; // 바닥 체크 거리
+    public float maxJumpPower = 40f; // 최대 점프 파워
+    public float minJumpThreshold = 60f; // 최소 소리 임계치
+    public float groundCheckDistance = 5f; // 바닥 체크 거리
     // public int health; // 플레이어 체력
     public LayerMask groundLayer; // 바닥 레이어
     private Vector3 originalPosition; // 시작했을때의 위치
