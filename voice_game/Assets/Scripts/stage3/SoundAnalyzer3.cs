@@ -28,6 +28,13 @@ public class SoundAnalyzer3 : MonoBehaviour
         {
             microphoneName = devices[0]; // 첫 번째 마이크 선택
             audioSource = GetComponent<AudioSource>();
+            audioSource.clip = Microphone.Start(microphoneName, true, 1, sampleRate);
+            audioSource.loop = true;
+            //audioSource.mute = true; // ????? ???????? ????
+            while (!(Microphone.GetPosition(null) > 0)) { } // ????? ??????? ???
+            audioSource.Play();
+            buffer = new float[bufferSize];
+            audioSource.mute = true; // 오디오 소스 음소거
             StartCoroutine(SetupMicrophone());
         }
         else

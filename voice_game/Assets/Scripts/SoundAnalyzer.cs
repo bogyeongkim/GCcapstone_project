@@ -6,42 +6,42 @@ using System.IO;
 
 public class SoundAnalyzer : MonoBehaviour
 {
-    const float REFERENCE = 0.00002f; // ·¹ÆÛ·±½º °ª
+    const float REFERENCE = 0.00002f; // ï¿½ï¿½ï¿½Û·ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-    public string microphoneName; // »ç¿ëÇÒ ¸¶ÀÌÅ© ÀÌ¸§
-    public int sampleRate = 44100; // »ùÇÃ¸µ ¼Óµµ
-    public int bufferSize = 2048; // ¹öÆÛ Å©±â
-    public FFTWindow fftWindow = FFTWindow.BlackmanHarris; // FFT Ã¢ ÇÔ¼ö
+    public string microphoneName; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å© ï¿½Ì¸ï¿½
+    public int sampleRate = 44100; // ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½Óµï¿½
+    public int bufferSize = 2048; // ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+    public FFTWindow fftWindow = FFTWindow.BlackmanHarris; // FFT Ã¢ ï¿½Ô¼ï¿½
 
-    public bool isRecording = false; // ³ìÀ½ »óÅÂ È®ÀÎ flag
-    float recordStartTime = 0f; // ³ìÀ½ ½ÃÀÛ ½Ã°£
+    public bool isRecording = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ flag
+    float recordStartTime = 0f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
-    float[] buffer; // ¿Àµð¿À ¹öÆÛ
-    public List<float> dbValues = new List<float>();//µ¥½Ãº§ °ª ÀúÀå ¸®½ºÆ®
+    float[] buffer; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public List<float> dbValues = new List<float>();//ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 
     private AudioSource audioSource;
 
     private float timer = 0f;
-    public float measurementInterval = 0.05f; // ÃøÁ¤ °£°Ý (ÃÊ)
+    public float measurementInterval = 0.05f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½)
 
     void Start()
     {
-        // ¸¶ÀÌÅ© µð¹ÙÀÌ½º ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
         string[] devices = Microphone.devices;
         if (devices.Length > 0)
         {
-            microphoneName = devices[0]; // Ã¹ ¹øÂ° ¸¶ÀÌÅ© ¼±ÅÃ
+            microphoneName = devices[0]; // Ã¹ ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½
             audioSource = GetComponent<AudioSource>();
             audioSource.clip = Microphone.Start(microphoneName, true, 1, sampleRate);
             audioSource.loop = true;
-            //audioSource.mute = true; // ¼Ò¸®¸¦ ¹«À½À¸·Î ¼³Á¤
-            while (!(Microphone.GetPosition(null) > 0)) { } // ¸¶ÀÌÅ© ½ÃÀÛ±îÁö ´ë±â
+            audioSource.mute = true; // ì˜¤ë””ì˜¤ ì†ŒìŠ¤ ìŒì†Œê±°
+            while (!(Microphone.GetPosition(null) > 0)) { } // ï¿½ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½Û±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             audioSource.Play();
             buffer = new float[bufferSize];
         }
         else
         {
-            UnityEngine.Debug.LogError("¸¶ÀÌÅ©¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            UnityEngine.Debug.LogError("ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
     }
 
@@ -49,19 +49,19 @@ public class SoundAnalyzer : MonoBehaviour
     {
         if (isRecording)
         {
-            if (Time.time - recordStartTime > 5f) // 5ÃÊ µ¿¾È¸¸ ÃøÁ¤
+            if (Time.time - recordStartTime > 5f) // 5ï¿½ï¿½ ï¿½ï¿½ï¿½È¸ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
-                isRecording = false; // ³ìÀ½ »óÅÂ Á¾·á
+                isRecording = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 return;
             }
 
-            timer += Time.deltaTime; // Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®
+            timer += Time.deltaTime; // Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 
             if (timer >= measurementInterval)
             {
                 timer -= measurementInterval;
 
-                // ¿Àµð¿À µ¥ÀÌÅÍ ÀÐ±â
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½
                 AudioSource audioSource = GetComponent<AudioSource>();
                 int position = Microphone.GetPosition(null);
                 audioSource.clip.GetData(buffer, position);
@@ -72,7 +72,7 @@ public class SoundAnalyzer : MonoBehaviour
                 float maxFrequency = 0f;
                 float maxAmplitude = 0f;
 
-                // ÃÖ´ë ÁøÆø °¡Áö´Â ÁÖÆÄ¼ö µµÃâ
+                // ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½ï¿½
                 for (int i = 0; i < bufferSize; i++)
                 {
                     float amplitude = spectrum[i];
@@ -87,10 +87,10 @@ public class SoundAnalyzer : MonoBehaviour
                     maxFrequency = 0;
 
 
-                //ÁÖÆÄ¼ö Ãâ·Â
-                //UnityEngine.Debug.Log("ÁÖÆÄ¼ö: " + maxFrequency.ToString("F2") + " Hz");
+                //ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½
+                //UnityEngine.Debug.Log("ï¿½ï¿½ï¿½Ä¼ï¿½: " + maxFrequency.ToString("F2") + " Hz");
 
-                // À½¾Ð ·¹º§ °è»ê
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 float pressure = 0f;
                 for (int i = 0; i < bufferSize; i++)
                 {
@@ -98,7 +98,7 @@ public class SoundAnalyzer : MonoBehaviour
                 }
                 pressure /= bufferSize;
 
-                // ¾Ð·ÂÀ» µ¥½Ãº§·Î º¯È¯
+                // ï¿½Ð·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ ï¿½ï¿½È¯
                 float db = 20 * Mathf.Log10(pressure / REFERENCE);
 
 
@@ -111,12 +111,12 @@ public class SoundAnalyzer : MonoBehaviour
                 float weight = 20 * Mathf.Log10(Ra) + 2.0f;
                 if (weight < -50f) weight = 0;
 
-                // A-weighted µ¥½Ãº§ °ªÀ» ±âÁ¸ µ¥½Ãº§ °ª¿¡ ´õÇÔ
+                // A-weighted ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 float dbA = db + weight;
 
                 if (dbA < 0f) dbA = 0f;
 
-                // µ¥½Ãº§ °ª ¸®½ºÆ®¿¡ Ãß°¡
+                // ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
                 dbValues.Add(dbA);
 
                 UnityEngine.Debug.Log("[" + dbValues.Count + "]" + "dBA : " + dbA);
@@ -133,7 +133,7 @@ public class SoundAnalyzer : MonoBehaviour
         }
     }
     
-    // µ¥½Ãº§ °ª ¸®½ºÆ® ¹ÝÈ¯
+    // ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯
     public List<float> GetDbValues()
     {
         return dbValues;
@@ -150,7 +150,7 @@ public class SoundAnalyzer : MonoBehaviour
             UnityEngine.Debug.Log("isRecording");
             isRecording = true;
             recordStartTime = Time.time;
-            dbValues.Clear(); // ±âÁ¸ ÃøÁ¤°ª ÃÊ±âÈ­
+            dbValues.Clear(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         }
     }
 }

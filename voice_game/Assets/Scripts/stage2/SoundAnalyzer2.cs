@@ -8,43 +8,46 @@ using UnityEngine.UI;
 
 public class SoundAnalyzer2 : MonoBehaviour
 {
-    const float REFERENCE = 0.00002f; // ·¹ÆÛ·±½º °ª
 
-    public string microphoneName; // »ç¿ëÇÒ ¸¶ÀÌÅ© ÀÌ¸§
-    public int sampleRate = 44100; // »ùÇÃ¸µ ¼Óµµ
-    public int bufferSize = 2048; // ¹öÆÛ Å©±â
-    public FFTWindow fftWindow = FFTWindow.BlackmanHarris; // FFT Ã¢ ÇÔ¼ö
+    const float REFERENCE = 0.00002f; // ë ˆí¼ëŸ°ìŠ¤ ê°’
+
+    public string microphoneName; // ì‚¬ìš©í•  ë§ˆì´í¬ ì´ë¦„
+    public int sampleRate = 44100; // ìƒ˜í”Œë§ ì†ë„
+    public int bufferSize = 2048; // ë²„í¼ í¬ê¸°
+    public FFTWindow fftWindow = FFTWindow.BlackmanHarris; // FFT ì°½ í•¨ìˆ˜
 
 
-    //******************************************************°æ°í Ãß°¡
+    //******************************************************ê²½ê³  ì¶”ê°€
+
     public float warningThreshold = 70f;
     public GameObject warningUI;
     public Image screenOverlay;
     private bool isWarningActive = false;
 
-    public bool isRecording = false; // ³ìÀ½ »óÅÂ È®ÀÎ flag
-    float recordStartTime = 0f; // ³ìÀ½ ½ÃÀÛ ½Ã°£
+    public bool isRecording = false; // ë…¹ìŒ ìƒíƒœ í™•ì¸ flag
+    float recordStartTime = 0f; // ë…¹ìŒ ì‹œì‘ ì‹œê°„
 
-    float[] buffer; // ¿Àµğ¿À ¹öÆÛ
-    public List<float> dbValues = new List<float>();//µ¥½Ãº§ °ª ÀúÀå ¸®½ºÆ®
+    float[] buffer; // ì˜¤ë””ì˜¤ ë²„í¼
+    public List<float> dbValues = new List<float>();//ë°ì‹œë²¨ ê°’ ì €ì¥ ë¦¬ìŠ¤íŠ¸
 
     private AudioSource audioSource;
 
     private float timer = 0f;
-    public float measurementInterval = 0.05f; // ÃøÁ¤ °£°İ (ÃÊ)
+    public float measurementInterval = 0.05f; // ì¸¡ì • ê°„ê²© (ì´ˆ)
 
     void Start()
     {
         string[] devices = Microphone.devices;
         if (devices.Length > 0)
         {
-            microphoneName = devices[0]; // Ã¹ ¹øÂ° ¸¶ÀÌÅ© ¼±ÅÃ
+            microphoneName = devices[0]; // ì²« å ì™ì˜™ì§¸ å ì™ì˜™å ì™ì˜™í¬ å ì™ì˜™å ì™ì˜™
             audioSource = GetComponent<AudioSource>();
+            audioSource.mute = true; // Â˜ã…»Â”Â”Â˜ Â†ÂŒÂŠ ÂÂŒÂ†ÂŒå«„
             StartCoroutine(SetupMicrophone());
         }
         else
         {
-            UnityEngine.Debug.LogError("¸¶ÀÌÅ©¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            UnityEngine.Debug.LogError("ë§ˆì´í¬ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 
@@ -52,7 +55,7 @@ public class SoundAnalyzer2 : MonoBehaviour
     {
         audioSource.clip = Microphone.Start(microphoneName, true, 1, sampleRate);
         audioSource.loop = true;
-        // ¸¶ÀÌÅ©°¡ ÁØºñµÉ ¶§±îÁö ±â´Ù¸²
+        // ë§ˆì´í¬ê°€ ì¤€ë¹„ë  ë•Œê¹Œì§€ ê¸°ë‹¤ë¦¼
         yield return new WaitUntil(() => Microphone.GetPosition(microphoneName) > 0);
         audioSource.Play();
         buffer = new float[bufferSize];
@@ -62,19 +65,19 @@ public class SoundAnalyzer2 : MonoBehaviour
     {
         if (isRecording)
         {
-            if (Time.time - recordStartTime > 5f) // 5ÃÊ µ¿¾È¸¸ ÃøÁ¤
+            if (Time.time - recordStartTime > 5f) // 5ì´ˆ ë™ì•ˆë§Œ ì¸¡ì •
             {
-                isRecording = false; // ³ìÀ½ »óÅÂ Á¾·á
+                isRecording = false; // ë…¹ìŒ ìƒíƒœ ì¢…ë£Œ
                 return;
             }
 
-            timer += Time.deltaTime; // Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®
+            timer += Time.deltaTime; // íƒ€ì´ë¨¸ ì—…ë°ì´íŠ¸
 
             if (timer >= measurementInterval)
             {
                 timer -= measurementInterval;
 
-                // ¿Àµğ¿À µ¥ÀÌÅÍ ÀĞ±â
+                // ì˜¤ë””ì˜¤ ë°ì´í„° ì½ê¸°
                 AudioSource audioSource = GetComponent<AudioSource>();
                 int position = Microphone.GetPosition(null);
 
@@ -103,7 +106,8 @@ public class SoundAnalyzer2 : MonoBehaviour
                 float maxFrequency = 0f;
                 float maxAmplitude = 0f;
 
-                // ÃÖ´ë ÁøÆø °¡Áö´Â ÁÖÆÄ¼ö µµÃâ
+                // ìµœëŒ€ ì§„í­ ê°€ì§€ëŠ” ì£¼íŒŒìˆ˜ ë„ì¶œ
+
                 for (int i = 0; i < bufferSize; i++)
                 {
                     float amplitude = spectrum[i];
@@ -118,10 +122,11 @@ public class SoundAnalyzer2 : MonoBehaviour
                     maxFrequency = 0;
 
 
-                //ÁÖÆÄ¼ö Ãâ·Â
-                //UnityEngine.Debug.Log("ÁÖÆÄ¼ö: " + maxFrequency.ToString("F2") + " Hz");
+                //ì£¼íŒŒìˆ˜ ì¶œë ¥
+                //UnityEngine.Debug.Log("ì£¼íŒŒìˆ˜: " + maxFrequency.ToString("F2") + " Hz");
 
-                // À½¾Ğ ·¹º§ °è»ê
+                // ìŒì•• ë ˆë²¨ ê³„ì‚°
+
                 float pressure = 0f;
                 for (int i = 0; i < bufferSize; i++)
                 {
@@ -129,7 +134,8 @@ public class SoundAnalyzer2 : MonoBehaviour
                 }
                 pressure /= bufferSize;
 
-                // ¾Ğ·ÂÀ» µ¥½Ãº§·Î º¯È¯
+                // ì••ë ¥ì„ ë°ì‹œë²¨ë¡œ ë³€í™˜
+
                 float db = 20 * Mathf.Log10(pressure / REFERENCE);
 
 
@@ -142,17 +148,16 @@ public class SoundAnalyzer2 : MonoBehaviour
                 float weight = 20 * Mathf.Log10(Ra) + 2.0f;
                 if (weight < -50f) weight = 0;
 
-                // A-weighted µ¥½Ãº§ °ªÀ» ±âÁ¸ µ¥½Ãº§ °ª¿¡ ´õÇÔ
+                // A-weighted ë°ì‹œë²¨ ê°’ì„ ê¸°ì¡´ ë°ì‹œë²¨ ê°’ì— ë”í•¨
                 float dbA = db + weight;
 
                 if (dbA < 0f) dbA = 0f;
 
-                // µ¥½Ãº§ °ª ¸®½ºÆ®¿¡ Ãß°¡
+                // ë°ì‹œë²¨ ê°’ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
                 dbValues.Add(dbA);
 
                 UnityEngine.Debug.Log("[" + dbValues.Count + "]" + "dBA : " + dbA);
-
-                //*************************************************************°æ°í Ãß°¡
+                //*************************************************************ê²½ê³  ì¶”ê°€
                 if (dbA > warningThreshold)
                 {
                     TriggerWarning();
@@ -164,21 +169,22 @@ public class SoundAnalyzer2 : MonoBehaviour
     /*
     void Start()
     {
-        // ¸¶ÀÌÅ© µğ¹ÙÀÌ½º ¼³Á¤
+        // ë§ˆì´í¬ ë””ë°”ì´ìŠ¤ ì„¤ì •
         string[] devices = Microphone.devices;
         if (devices.Length > 0)
         {
-            microphoneName = devices[0]; // Ã¹ ¹øÂ° ¸¶ÀÌÅ© ¼±ÅÃ
+            microphoneName = devices[0]; // ì²« ë²ˆì§¸ ë§ˆì´í¬ ì„ íƒ
             audioSource = GetComponent<AudioSource>();
             audioSource.clip = Microphone.Start(microphoneName, true, 1, sampleRate);
             audioSource.loop = true;
-            while (!(Microphone.GetPosition(null) > 0)) { } // ¸¶ÀÌÅ© ½ÃÀÛ±îÁö ´ë±â
+            while (!(Microphone.GetPosition(null) > 0)) { } // ë§ˆì´í¬ ì‹œì‘ê¹Œì§€ ëŒ€ê¸°
             audioSource.Play();
             buffer = new float[bufferSize];
         }
         else
         {
-            UnityEngine.Debug.LogError("¸¶ÀÌÅ©¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+
+            UnityEngine.Debug.LogError("ë§ˆì´í¬ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
     
@@ -186,19 +192,20 @@ public class SoundAnalyzer2 : MonoBehaviour
     {
         if (isRecording)
         {
-            if (Time.time - recordStartTime > 5f) // 5ÃÊ µ¿¾È¸¸ ÃøÁ¤
+            if (Time.time - recordStartTime > 5f) // 5ì´ˆ ë™ì•ˆë§Œ ì¸¡ì •
             {
-                isRecording = false; // ³ìÀ½ »óÅÂ Á¾·á
+                isRecording = false; // ë…¹ìŒ ìƒíƒœ ì¢…ë£Œ
                 return;
             }
 
-            timer += Time.deltaTime; // Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®
+            timer += Time.deltaTime; // íƒ€ì´ë¨¸ ì—…ë°ì´íŠ¸
 
             if (timer >= measurementInterval)
             {
                 timer -= measurementInterval;
 
-                // ¿Àµğ¿À µ¥ÀÌÅÍ ÀĞ±â
+                // ì˜¤ë””ì˜¤ ë°ì´í„° ì½ê¸°
+
                 AudioSource audioSource = GetComponent<AudioSource>();
                 int position = Microphone.GetPosition(null);
                 audioSource.clip.GetData(buffer, position);
@@ -209,7 +216,8 @@ public class SoundAnalyzer2 : MonoBehaviour
                 float maxFrequency = 0f;
                 float maxAmplitude = 0f;
 
-                // ÃÖ´ë ÁøÆø °¡Áö´Â ÁÖÆÄ¼ö µµÃâ
+                // ìµœëŒ€ ì§„í­ ê°€ì§€ëŠ” ì£¼íŒŒìˆ˜ ë„ì¶œ
+
                 for (int i = 0; i < bufferSize; i++)
                 {
                     float amplitude = spectrum[i];
@@ -224,10 +232,11 @@ public class SoundAnalyzer2 : MonoBehaviour
                     maxFrequency = 0;
 
 
-                //ÁÖÆÄ¼ö Ãâ·Â
-                //UnityEngine.Debug.Log("ÁÖÆÄ¼ö: " + maxFrequency.ToString("F2") + " Hz");
+                //ì£¼íŒŒìˆ˜ ì¶œë ¥
+                //UnityEngine.Debug.Log("ì£¼íŒŒìˆ˜: " + maxFrequency.ToString("F2") + " Hz");
 
-                // À½¾Ğ ·¹º§ °è»ê
+                // ìŒì•• ë ˆë²¨ ê³„ì‚°
+
                 float pressure = 0f;
                 for (int i = 0; i < bufferSize; i++)
                 {
@@ -235,7 +244,7 @@ public class SoundAnalyzer2 : MonoBehaviour
                 }
                 pressure /= bufferSize;
 
-                // ¾Ğ·ÂÀ» µ¥½Ãº§·Î º¯È¯
+                // ì••ë ¥ì„ ë°ì‹œë²¨ë¡œ ë³€í™˜
                 float db = 20 * Mathf.Log10(pressure / REFERENCE);
 
 
@@ -248,17 +257,20 @@ public class SoundAnalyzer2 : MonoBehaviour
                 float weight = 20 * Mathf.Log10(Ra) + 2.0f;
                 if (weight < -50f) weight = 0;
 
-                // A-weighted µ¥½Ãº§ °ªÀ» ±âÁ¸ µ¥½Ãº§ °ª¿¡ ´õÇÔ
+                // A-weighted ë°ì‹œë²¨ ê°’ì„ ê¸°ì¡´ ë°ì‹œë²¨ ê°’ì— ë”í•¨
+
                 float dbA = db + weight;
 
                 if (dbA < 0f) dbA = 0f;
 
-                // µ¥½Ãº§ °ª ¸®½ºÆ®¿¡ Ãß°¡
+                // ë°ì‹œë²¨ ê°’ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+
                 dbValues.Add(dbA);
 
                 UnityEngine.Debug.Log("[" + dbValues.Count + "]" + "dBA : " + dbA);
 
-                //*************************************************************°æ°í Ãß°¡
+                //*************************************************************ê²½ê³  ì¶”ê°€
+
                 if (dbA > warningThreshold)
                 {
                     TriggerWarning();
@@ -271,38 +283,47 @@ public class SoundAnalyzer2 : MonoBehaviour
     void TriggerWarning()
     {
         //StartCoroutine(TriggerWarningUI());
-        Handheld.Vibrate(); // Áøµ¿¿Àµµ·Ï
-        StartCoroutine(FlashWarning()); // È­¸é ºÓ°Ô ±ôºıÀÌµµ·Ï
+        Handheld.Vibrate(); // ì§„ë™ì˜¤ë„ë¡
+        StartCoroutine(FlashWarning()); // í™”ë©´ ë¶‰ê²Œ ê¹œë¹¡ì´ë„ë¡
+
     }
 
     IEnumerator TriggerWarningUI()
     {
         if (warningUI != null)
         {
-            warningUI.SetActive(true); // °æ°í UI ¿ÀºêÁ§Æ® Ç¥½Ã
-            yield return new WaitForSeconds(0.5f); // 0.5ÃÊ µ¿¾È ´ë±â
-            warningUI.SetActive(false); // °æ°í UI ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+
+            warningUI.SetActive(true); // ê²½ê³  UI ì˜¤ë¸Œì íŠ¸ í‘œì‹œ
+            yield return new WaitForSeconds(0.5f); // 0.5ì´ˆ ë™ì•ˆ ëŒ€ê¸°
+            warningUI.SetActive(false); // ê²½ê³  UI ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™”
         }
     }
 
     IEnumerator FlashWarning()
     {
-        if (isWarningActive) // È­¸é ±ôºıÀÌ´Â ÁßÀÎÁö È®ÀÎ
+
+        if (isWarningActive) // í™”ë©´ ê¹œë¹¡ì´ëŠ” ì¤‘ì¸ì§€ í™•ì¸
+
         {
             yield break;
         }
 
-        isWarningActive = true; // °æ°í »óÅÂ È°¼ºÈ­
+        isWarningActive = true; // ê²½ê³  ìƒíƒœ í™œì„±í™”
+
 
         Color originalColor = screenOverlay.color;
         Color warningColor = new Color(1, 0, 0, 0.2f);
 
-        screenOverlay.color = warningColor; // ¹İÅõ¸íÇÑ ºÓÀº»ö È­¸éÀ¸·Î
+
+        screenOverlay.color = warningColor; // ë°˜íˆ¬ëª…í•œ ë¶‰ì€ìƒ‰ í™”ë©´ìœ¼ë¡œ
+
         yield return new WaitForSeconds(0.3f);
         screenOverlay.color = originalColor;
         yield return new WaitForSeconds(0.3f);
 
-        isWarningActive = false; // °æ°í »óÅÂ ºñÈ°¼ºÈ­
+
+        isWarningActive = false; // ê²½ê³  ìƒíƒœ ë¹„í™œì„±í™”
+
     }
 
     public void ClearWarning()
@@ -325,7 +346,8 @@ public class SoundAnalyzer2 : MonoBehaviour
         }
     }
 
-    // µ¥½Ãº§ °ª ¸®½ºÆ® ¹İÈ¯
+    // ë°ì‹œë²¨ ê°’ ë¦¬ìŠ¤íŠ¸ ë°˜í™˜
+
     public List<float> GetDbValues()
     {
         return dbValues;
@@ -342,7 +364,9 @@ public class SoundAnalyzer2 : MonoBehaviour
             UnityEngine.Debug.Log("isRecording");
             isRecording = true;
             recordStartTime = Time.time;
-            dbValues.Clear(); // ±âÁ¸ ÃøÁ¤°ª ÃÊ±âÈ­
+
+            dbValues.Clear(); // ê¸°ì¡´ ì¸¡ì •ê°’ ì´ˆê¸°í™”
+
         }
     }
 }
