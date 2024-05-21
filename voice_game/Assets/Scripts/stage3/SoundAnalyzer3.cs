@@ -23,23 +23,27 @@ public class SoundAnalyzer3 : MonoBehaviour
 
     void Start()
     {
-        // ????? ?????? ????
         string[] devices = Microphone.devices;
         if (devices.Length > 0)
         {
-            microphoneName = devices[0]; // ? ??�� ????? ????
+            microphoneName = devices[0]; // 첫 번째 마이크 선택
             audioSource = GetComponent<AudioSource>();
-            audioSource.clip = Microphone.Start(microphoneName, true, 1, sampleRate);
-            audioSource.loop = true;
-            //audioSource.mute = true; // ????? ???????? ????
-            while (!(Microphone.GetPosition(null) > 0)) { } // ????? ??????? ???
-            audioSource.Play();
-            buffer = new float[bufferSize];
+            StartCoroutine(SetupMicrophone());
         }
         else
         {
-            UnityEngine.Debug.LogError("??????? ??? ?? ???????.");
+            UnityEngine.Debug.LogError("마이크를 찾을 수 없습니다.");
         }
+    }
+
+    IEnumerator SetupMicrophone()
+    {
+        audioSource.clip = Microphone.Start(microphoneName, true, 1, sampleRate);
+        audioSource.loop = true;
+        // 마이크가 준비될 때까지 기다림
+        yield return new WaitUntil(() => Microphone.GetPosition(microphoneName) > 0);
+        audioSource.Play();
+        buffer = new float[bufferSize];
     }
 
     void Update()
@@ -53,7 +57,27 @@ public class SoundAnalyzer3 : MonoBehaviour
             // ????? ?????? ?��?
             AudioSource audioSource = GetComponent<AudioSource>();
             int position = Microphone.GetPosition(null);
-            audioSource.clip.GetData(buffer, position);
+
+
+            int startPosition = position - bufferSize;
+            if (startPosition < 0) startPosition = 0;
+
+            if (buffer.Length < bufferSize)
+            {
+                UnityEngine.Debug.LogError("Buffer size is too small");
+                return;
+            }
+
+            if (position > audioSource.clip.samples)
+            {
+                UnityEngine.Debug.LogError("Position out of range");
+                return;
+            }
+
+
+            audioSource.clip.GetData(buffer, startPosition);
+
+
 
             float[] spectrum = new float[bufferSize];
             audioSource.GetSpectrumData(spectrum, 0, fftWindow);
