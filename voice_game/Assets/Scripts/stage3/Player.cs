@@ -8,9 +8,9 @@ public class Player : MonoBehaviour, IDamageAble
     public SoundAnalyzer3 SoundAnalyzer3; // SoundAnalyzer 스크립트 연결
     private UIManager uiManager; // UIManager 연결
 
-    public float maxJumpPower = 40f; // 최대 점프 파워
-    public float minJumpThreshold = 60f; // 최소 소리 임계치
-    public float groundCheckDistance = 5f; // 바닥 체크 거리
+    public float maxJumpPower = 20f; // 최대 점프 파워
+    public float minJumpThreshold = 20f; // 최소 소리 임계치
+    public float groundCheckDistance = 0.01f; // 바닥 체크 거리
     // public int health; // 플레이어 체력
     public LayerMask groundLayer; // 바닥 레이어
     private Vector3 originalPosition; // 시작했을때의 위치
@@ -21,6 +21,9 @@ public class Player : MonoBehaviour, IDamageAble
     public bool isGrounded; // 바닥에 닿았는지 여부를 나타내는 플래그
     public bool isCanMove; // 움직일 수 있는지 체크
 
+    private bool isGameEndProcessed = false; // 게임 종료 처리 여부
+
+    private List<float> latestDbValues = new List<float>(); // 최근 소리 데시벨 값 저장
     
     private void Start()
     {
@@ -43,20 +46,29 @@ public class Player : MonoBehaviour, IDamageAble
 
     private void Update()
     {
-        if (GameManager.Instance.isGameEnd) return;
-        
+        if (GameManager.Instance.isGameEnd) 
+        {
+            if (!isGameEndProcessed)
+            {
+                Debug.Log("Game Ended. Stage 3 Score: " + GameManager.Instance.Stage3Score);
+                isGameEndProcessed = true;
+            }
+            return;
+        }
+
         // 바닥 체크
         CheckGrounded();
-        
+
         List<float> dbValues = SoundAnalyzer3.GetDbValues();
 
-        if (dbValues.Count > 0)
+        if (dbValues.Count > 4) // 리스트에 최소 5개의 값이 있어야 함
         {
-            float latestDb = dbValues[^1]; // 가장 최근의 소리 데시벨 값
+            // dbValues 리스트에서 가장 최근의 소리 데시벨 값이 아니라, 최근 이후 4번째의 소리 데시벨 값을 targetDb로 선택
+            float targetDb = dbValues[^5]; // ^5(끝에서 5번쨰) C# 8.0의 인덱스 문법 사용
 
-            if (latestDb > minJumpThreshold && isGrounded)
+            if (targetDb > minJumpThreshold && isGrounded)
             {
-                Jump(latestDb);
+                Jump(targetDb);
             }
         }
 
@@ -64,14 +76,13 @@ public class Player : MonoBehaviour, IDamageAble
         playerAnim.SetBool(AnimParam.isJump, !isGrounded);
     }
 
+
     private void Jump(float db)
     {
         // 최대 점프 파워와 소리 데시벨에 비례하여 점프 파워 계산
-        // 현재 maxJumpPower는 20, 소리 데시벨 값이 최대 점프 파워에 비례해 결정
-        float jumpPower = maxJumpPower * ((db / 100f));
-        // rb는 Rigidbody2D 컴포넌트, rb.velocity는 객체의 현재 속도 벡터
-        // 새로운 속도 벡터를 설정, 위로 점프하게 함. x축 속도 유지, y축 속도만 변경
+        float jumpPower = maxJumpPower * ((db / 60f));
         rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+        Debug.Log("Jump power applied: " + jumpPower);
     }
 
     private void CheckGrounded()
@@ -94,12 +105,5 @@ public class Player : MonoBehaviour, IDamageAble
         playerAnim.SetTrigger(AnimParam.hurt);
 
         GameManager.Instance.score--;
-        
-        // health -= value;
-        // uiManager.SetHpImage(health);
-        // if (health > 0)
-        //     return;
-
-        // uiManager.OnGameOver();
     }
 }
