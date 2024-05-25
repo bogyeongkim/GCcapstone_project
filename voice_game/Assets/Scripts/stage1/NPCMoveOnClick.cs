@@ -31,6 +31,13 @@ public class NPCMoveOnClick : MonoBehaviour
     public GameObject star2;
     public GameObject star3;
 
+    public GameObject player2;
+    public GameObject background;
+
+    public GameObject star_1;
+    public GameObject star_2;
+    public GameObject star_3;
+
 
     public TextMeshProUGUI fairy_text;
     public TextMeshProUGUI line;
@@ -136,7 +143,7 @@ public class NPCMoveOnClick : MonoBehaviour
              */
             foreach (float dbValue in DBL)
             {
-                if (dbValue > 50) // 50보다 큰 값이 있는 경우
+                if (dbValue > 45) // 45보다 큰 값이 있는 경우
                 {
                     TriggerEvent_loud(); // 이벤트를 발생시킴
                     isLoud = true;
@@ -145,10 +152,10 @@ public class NPCMoveOnClick : MonoBehaviour
                 sumDb += dbValue;
             }
 
-            if (!isLoud) // 40을 초과하는 값이 없는 경우
+            if (!isLoud) // 45를 초과하는 값이 없는 경우
             {
                 float averageDb = sumDb / DBL.Count; // 평균 데시벨 값 계산
-                if (averageDb < 5) // 평균 데시벨 값이 5보다 작은 경우
+                if (averageDb < 10) // 평균 데시벨 값이 10보다 작은 경우
                 {
                     TriggerEvent_TooSoft();
                 }
@@ -253,6 +260,7 @@ public class NPCMoveOnClick : MonoBehaviour
             playerAnimator.SetBool("isRun", false);
             UnityEngine.Debug.Log("Next!");
             next_fairy_text.GetComponent<TextMeshProUGUI>().enabled = true;
+            
             fairy.GetComponent<Renderer>().enabled = true;
 
             if (gameObject.name == "NPC03")
@@ -261,7 +269,27 @@ public class NPCMoveOnClick : MonoBehaviour
                 //fairy.GetComponent<Renderer>().enabled = true;
                 int stagescore = ScoreManager.instance.GetTotalScore();
                 UnityEngine.Debug.Log("스테이지1 총 점수 : "+ stagescore);
+                player2.SetActive(false);
+                background.GetComponent<Renderer>().enabled = true;
+
+                if (stagescore == 1)
+                {
+                    star_2.SetActive(true);
+                }
+                else if (stagescore == 2)
+                {
+                    star_1.SetActive(true);
+                    star_3.SetActive(true);
+                }
+                else
+                {
+                    star_1.SetActive(true);
+                    star_2.SetActive(true);
+                    star_3.SetActive(true);
+                }
+
             }
+            else { arrow02.GetComponent<Renderer>().enabled = true; }
         }
 
         

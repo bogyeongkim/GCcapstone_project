@@ -36,6 +36,10 @@ public class NPC_staff : MonoBehaviour
     public GameObject retry_button;
     public GameObject arrow;
 
+    public GameObject star1;
+    public GameObject star2;
+    public GameObject star3;
+
     public GameObject[] drinkObjects; // 음료 오브젝트 배열
     public GameObject[] drinks;
     public TextMeshProUGUI[] drinks_t;
@@ -155,7 +159,7 @@ public class NPC_staff : MonoBehaviour
                 averageDb = sumDb / countDb; // 0이 아닌 값의 평균 데시벨 값 계산
                 UnityEngine.Debug.Log("average :"+averageDb);
             }
-            if (averageDb < 20) 
+            if (averageDb < 35) 
             {
                 if (turn == 1)
                 {
@@ -214,20 +218,25 @@ public class NPC_staff : MonoBehaviour
         {
             //차가운 딸기
             drink_num = 0;
+            ScoreManager.instance.AddScore(1);
         }
         else if (isSoft1 == true && isSoft2 == false)
         {
             //따뜻한 딸기
             drink_num = 1;
+            ScoreManager.instance.AddScore(2);
         }
         else if (isSoft1 == false && isSoft2 == true)
         {
             //차가운 초코
             drink_num = 2;
+            ScoreManager.instance.AddScore(2);
         }
         else
         {
+            //따뜻한 초코
             drink_num = 3;
+            ScoreManager.instance.AddScore(3);
         }
         
     }
@@ -324,8 +333,15 @@ public class NPC_staff : MonoBehaviour
         drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = false; // 대사
         fairy.GetComponent<Renderer>().enabled = true;
         blank.GetComponent<Renderer>().enabled = true;
-        //blank_image.GetComponent<Renderer>().enabled = true; 무지배경 깔지말지 고민
+        blank_image.GetComponent<Renderer>().enabled = true; //무지배경 깔지말지 고민
         fairy2.GetComponent<TextMeshProUGUI>().enabled = true;
+
+        int stagescore = ScoreManager.instance.GetTotalScore();
+        UnityEngine.Debug.Log("스테이지2 점수 : " + stagescore);
+
+        star1.SetActive(true);
+        star2.SetActive(true);
+        star3.SetActive(true);
     }
 
     IEnumerator TriggerEvent_bad(float waitTime) // 부적절한 음료 나옴
@@ -346,7 +362,20 @@ public class NPC_staff : MonoBehaviour
         staff_bubble1.GetComponent<Renderer>().enabled = false; // 말풍선
         fairy.GetComponent<Renderer>().enabled = true;
         blank.GetComponent<Renderer>().enabled = true;
-        //blank_image.GetComponent<Renderer>().enabled = true; 무지배경 깔지말지 고민
+        blank_image.GetComponent<Renderer>().enabled = true; //무지배경 깔지말지 고민
         fairy3.GetComponent<TextMeshProUGUI>().enabled = true;
+
+        int stagescore = ScoreManager.instance.GetTotalScore();
+        UnityEngine.Debug.Log("스테이지2 점수 : " + stagescore);
+
+        if (stagescore == 1)
+        {
+            star2.SetActive(true);
+        }
+        else 
+        {
+            star1.SetActive(true);
+            star3.SetActive(true);
+        }
     }
 }

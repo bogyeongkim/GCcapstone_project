@@ -19,7 +19,7 @@ public class SoundAnalyzer2 : MonoBehaviour
 
     //******************************************************경고 추가
 
-    public float warningThreshold = 70f;
+    public float warningThreshold = 60f;
     public GameObject warningUI;
     public Image screenOverlay;
     private bool isWarningActive = false;
@@ -40,9 +40,9 @@ public class SoundAnalyzer2 : MonoBehaviour
         string[] devices = Microphone.devices;
         if (devices.Length > 0)
         {
-            microphoneName = devices[0]; // 첫 占쏙옙째 占쏙옙占쏙옙크 占쏙옙占쏙옙
+            microphoneName = devices[0]; 
             audioSource = GetComponent<AudioSource>();
-            audioSource.mute = true; // ㅻ  嫄
+            audioSource.mute = true; // 음소거 비활성화
             StartCoroutine(SetupMicrophone());
         }
         else
