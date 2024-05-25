@@ -62,7 +62,21 @@ public class NPC_staff : MonoBehaviour
     public TextMeshProUGUI staff_bad2;
 
     //오디오
-    public AudioSource staff_audio1;
+    public AudioSource staff_audio1; 
+    public AudioSource staff_audio2;
+    public AudioSource staff_audio3;
+    public AudioSource staff_audio4;
+    
+    public AudioSource[] staff_audio_d;
+
+    public AudioSource a_staff_bad1;
+    public AudioSource a_staff_bad2;
+
+    public AudioSource a_fairy1;
+    public AudioSource a_fairy2;
+    public AudioSource a_fairy3;
+
+    public AudioSource a_customer;
 
 
 
@@ -98,9 +112,9 @@ public class NPC_staff : MonoBehaviour
         else
             staff_line2.GetComponent<TextMeshProUGUI>().enabled = true;
         if (turn == 0) 
-            staff_audio1.Play(); //오디오
-        //else
-            //staff_audio1.Play(); //오디오 2로 수정 필요****************************************************
+            staff_audio1.Play(); 
+        else
+            staff_audio2.Play();
         StartCoroutine(StartRecordingAfterAudioEnds(staff_audio1.clip.length + 1.0f));//오디오 끝날때까지
     }
 
@@ -199,8 +213,8 @@ public class NPC_staff : MonoBehaviour
     void TriggerEvent_Wait()
     {
         staff_line3.GetComponent<TextMeshProUGUI>().enabled = true; // 잠시만 기다려주세요
+        staff_audio3.Play();
         staff_bubble1.GetComponent<Renderer>().enabled = true; // 말풍선
-        //staff_audio2.Play(); //오디오
         StartCoroutine(WaitAndExecuteFunction(4.0f));
     }
 
@@ -267,7 +281,8 @@ public class NPC_staff : MonoBehaviour
         customer_angry.GetComponent<Renderer>().enabled = true;
         customer_bubble.GetComponent<Renderer>().enabled = true; // 말풍선
         customer_line.GetComponent<TextMeshProUGUI>().enabled = true; //텍스트
-        
+        a_customer.Play();
+
         StartCoroutine(Retry_loud1(5.0f));
     }
     
@@ -276,6 +291,7 @@ public class NPC_staff : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         // 다른 손님들이 불편해하니 나가주세요ㅜㅜ
         staff_bubble2.GetComponent<Renderer>().enabled = true; // 말풍선
+        staff_audio4.Play();
         staff_smile.GetComponent<Renderer>().enabled = false;
         staff_sad.GetComponent<Renderer>().enabled = true;
         staff_line4.GetComponent<TextMeshProUGUI>().enabled = true; //텍스트
@@ -289,7 +305,9 @@ public class NPC_staff : MonoBehaviour
         fairy.GetComponent<Renderer>().enabled = true;
         blank.GetComponent<Renderer>().enabled = true;
         blank_image.GetComponent<Renderer>().enabled = true;
+        cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy1.GetComponent<TextMeshProUGUI>().enabled = true;
+        a_fairy1.Play();
         retry_button.SetActive(true);
         retry.GetComponent<TextMeshProUGUI>().enabled = true;
 
@@ -315,6 +333,7 @@ public class NPC_staff : MonoBehaviour
         // 음료 나옴
         drinks[drink_num].SetActive(true); // 음료 이미지
         drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = true; // 대사
+        staff_audio_d[drink_num].Play();
         staff_bubble1.GetComponent<Renderer>().enabled = true; // 말풍선
         
         if (drink_num == 3)
@@ -331,9 +350,11 @@ public class NPC_staff : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = false; // 대사
+        a_fairy2.Play();
         fairy.GetComponent<Renderer>().enabled = true;
         blank.GetComponent<Renderer>().enabled = true;
         blank_image.GetComponent<Renderer>().enabled = true; //무지배경 깔지말지 고민
+        cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy2.GetComponent<TextMeshProUGUI>().enabled = true;
 
         int stagescore = ScoreManager.instance.GetTotalScore();
@@ -349,11 +370,13 @@ public class NPC_staff : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = false; // 대사
         staff_bad1.GetComponent<TextMeshProUGUI>().enabled = true;
+        a_staff_bad1.Play();
 
         yield return new WaitForSeconds(4.0f);
 
         staff_bad1.GetComponent<TextMeshProUGUI>().enabled = false;
         staff_bad2.GetComponent<TextMeshProUGUI>().enabled = true;
+        a_staff_bad2.Play();
         staff_smile.GetComponent<Renderer>().enabled = false;
         staff_sad.GetComponent<Renderer>().enabled = true;
 
@@ -363,7 +386,9 @@ public class NPC_staff : MonoBehaviour
         fairy.GetComponent<Renderer>().enabled = true;
         blank.GetComponent<Renderer>().enabled = true;
         blank_image.GetComponent<Renderer>().enabled = true; //무지배경 깔지말지 고민
+        cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy3.GetComponent<TextMeshProUGUI>().enabled = true;
+        a_fairy3.Play();
 
         int stagescore = ScoreManager.instance.GetTotalScore();
         UnityEngine.Debug.Log("스테이지2 점수 : " + stagescore);

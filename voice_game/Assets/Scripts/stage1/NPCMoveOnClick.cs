@@ -47,6 +47,13 @@ public class NPCMoveOnClick : MonoBehaviour
     public TextMeshProUGUI good;
     public TextMeshProUGUI next_fairy_text;
 
+    public AudioSource a_fairy_text;
+    public AudioSource a_response;
+    public AudioSource a_loud;
+    public AudioSource a_quiet;
+    public AudioSource a_good;
+    public AudioSource a_next_fairy_text;
+
 
     void Start()
     {
@@ -62,6 +69,8 @@ public class NPCMoveOnClick : MonoBehaviour
             UnityEngine.Debug.LogError("SoundAnalyzer 컴포넌트를 찾을 수 없습니다.");
         }
         //fairy_text.GetComponent<TextMeshProUGUI>().enabled = true;
+        if (gameObject.name == "NPC01")
+            a_fairy_text.Play();
         fairy.GetComponent<Renderer>().enabled = true;
         arrow02.GetComponent<Renderer>().enabled = true;
     }
@@ -124,7 +133,7 @@ public class NPCMoveOnClick : MonoBehaviour
     {
         bool isLoud = false;
         float sumDb = 0f;
-        int countDb = DBL.Count;
+        int countDb = 0;
 
         yield return new WaitForSeconds(5); // 5초 기다림
 
@@ -149,12 +158,21 @@ public class NPCMoveOnClick : MonoBehaviour
                     isLoud = true;
                     break; // 하나라도 조건을 만족하는 경우 추가 검사 없이 loop 종료
                 }
-                sumDb += dbValue;
+                else if (dbValue > 0)
+                {
+                    sumDb += dbValue;
+                    countDb++;
+                }
+            }
+            
+            if (countDb == 0) 
+            {
+                countDb = 1;
             }
 
             if (!isLoud) // 45를 초과하는 값이 없는 경우
             {
-                float averageDb = sumDb / DBL.Count; // 평균 데시벨 값 계산
+                float averageDb = sumDb / countDb; // 평균 데시벨 값 계산
                 if (averageDb < 10) // 평균 데시벨 값이 10보다 작은 경우
                 {
                     TriggerEvent_TooSoft();
@@ -189,6 +207,7 @@ public class NPCMoveOnClick : MonoBehaviour
     void TriggerEvent_loud()
     {
         loud.GetComponent<TextMeshProUGUI>().enabled = true;
+        a_loud.Play();
         fairy.GetComponent<Renderer>().enabled = true;
         StartCoroutine(WaitAndTriggerAppropriate(4.0f));// 3초 후 TriggerEvent_Appropriate 호출
     }
@@ -196,6 +215,7 @@ public class NPCMoveOnClick : MonoBehaviour
     void TriggerEvent_good()
     {
         good.GetComponent<TextMeshProUGUI>().enabled = true;
+        a_good.Play();
         fairy.GetComponent<Renderer>().enabled = true;
         StartCoroutine(WaitAndTriggerAppropriate(4.0f));// 3초 후 TriggerEvent_Appropriate 호출
     }
@@ -213,6 +233,7 @@ public class NPCMoveOnClick : MonoBehaviour
     void TriggerEvent_TooSoft()
     {
         quiet.GetComponent<TextMeshProUGUI>().enabled = true;
+        a_quiet.Play();
         fairy.GetComponent<Renderer>().enabled = true;
         StartCoroutine(WaitAndTriggerRetry(5.0f));
     }
@@ -228,6 +249,7 @@ public class NPCMoveOnClick : MonoBehaviour
     void TriggerEvent_Appropriate()
     {
         response.GetComponent<TextMeshProUGUI>().enabled = true;
+        a_response.Play();
         
         int stagescore = ScoreManager.instance.GetTotalScore();
         UnityEngine.Debug.Log("현재 점수 : " + stagescore);
@@ -260,6 +282,7 @@ public class NPCMoveOnClick : MonoBehaviour
             playerAnimator.SetBool("isRun", false);
             UnityEngine.Debug.Log("Next!");
             next_fairy_text.GetComponent<TextMeshProUGUI>().enabled = true;
+            a_next_fairy_text.Play();
             
             fairy.GetComponent<Renderer>().enabled = true;
 
@@ -281,7 +304,7 @@ public class NPCMoveOnClick : MonoBehaviour
                     star_1.SetActive(true);
                     star_3.SetActive(true);
                 }
-                else
+                else if (stagescore == 3)
                 {
                     star_1.SetActive(true);
                     star_2.SetActive(true);
@@ -291,7 +314,5 @@ public class NPCMoveOnClick : MonoBehaviour
             }
             else { arrow02.GetComponent<Renderer>().enabled = true; }
         }
-
-        
     }
 }
