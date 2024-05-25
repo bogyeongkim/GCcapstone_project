@@ -55,6 +55,17 @@ public class SoundAnalyzer3 : MonoBehaviour
 
     void Update()
     {
+        // 게임이 종료되었는지 확인
+        if (GameManager.Instance.isGameEnd) 
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+                Microphone.End(microphoneName);
+            }
+            return;
+        }
+
         timer += Time.deltaTime; // ???? ???????
 
         if (timer >= measurementInterval)
