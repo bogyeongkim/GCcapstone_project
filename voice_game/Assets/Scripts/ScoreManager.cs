@@ -7,7 +7,10 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance; 
+    
     private int totalScore = 0; // 총 점수
+
+    private List<GameObject> collectedItems = new List<GameObject>();
 
     void Awake()
     {
@@ -45,5 +48,17 @@ public class ScoreManager : MonoBehaviour
         {
             UnityEngine.Debug.Log("");
         }
+    }
+
+    // 아이템 저장
+    public void AddItem(GameObject item)
+    {
+        collectedItems.Add(item);
+    }
+
+    // 아이템 불러오기
+    public List<GameObject> GetCollectedItems()
+    {
+        return collectedItems;
     }
 }
