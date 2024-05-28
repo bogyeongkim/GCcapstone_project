@@ -9,21 +9,14 @@ public class DragonReaction : MonoBehaviour
     public GameObject reaction2; //4-6Á¡
     public GameObject reaction3; //7-9Á¡
 
-    // Start is called before the first frame update
-    void Start()
+    public void React()
     {
-        reaction1.SetActive(false);
-        reaction2.SetActive(false);
-        reaction3.SetActive(false);
-
         int totalScore = ScoreManager.instance.GetTotalScore();
         ShowReaction(totalScore);
     }
 
     void ShowReaction(int score)
     {
-        
-
         if (score >= 1 && score <= 3)
         {
             reaction1.SetActive(true);
