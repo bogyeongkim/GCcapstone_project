@@ -12,7 +12,9 @@ public class testing : MonoBehaviour
     {
         ScoreManager.instance.AddItem(book);
         ScoreManager.instance.AddItem(drink);
-        ScoreManager.instance.AddScore(8);
+        ScoreManager.instance.AddScore2(1,3);
+        ScoreManager.instance.AddScore2(2,1);
+        ScoreManager.instance.AddScore2(3,1);
     }
 
     // Update is called once per frame

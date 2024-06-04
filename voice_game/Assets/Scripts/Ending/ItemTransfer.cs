@@ -24,6 +24,9 @@ public class ItemTransfer : MonoBehaviour, IPointerClickHandler
         arrow1.SetActive(true);
         arrow2.SetActive(true);
 
+        itemSlot1.enabled = true;
+        itemSlot2.enabled = true;
+
         DisplayCollectedItems();
         UnityEngine.Debug.Log("item display");
 

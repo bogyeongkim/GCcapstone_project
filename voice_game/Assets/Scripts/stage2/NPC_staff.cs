@@ -35,6 +35,7 @@ public class NPC_staff : MonoBehaviour
     public GameObject customer_bubble;
     public GameObject retry_button;
     public GameObject arrow;
+    public GameObject next_button;
 
     public GameObject star1;
     public GameObject star2;
@@ -232,25 +233,25 @@ public class NPC_staff : MonoBehaviour
         {
             //차가운 딸기
             drink_num = 0;
-            ScoreManager.instance.AddScore(1);
+            ScoreManager.instance.AddScore2(2,1);
         }
         else if (isSoft1 == true && isSoft2 == false)
         {
             //따뜻한 딸기
             drink_num = 1;
-            ScoreManager.instance.AddScore(2);
+            ScoreManager.instance.AddScore2(2,2);
         }
         else if (isSoft1 == false && isSoft2 == true)
         {
             //차가운 초코
             drink_num = 2;
-            ScoreManager.instance.AddScore(2);
+            ScoreManager.instance.AddScore2(2,2);
         }
         else
         {
             //따뜻한 초코
             drink_num = 3;
-            ScoreManager.instance.AddScore(3);
+            ScoreManager.instance.AddScore2(2,3);
         }
         
     }
@@ -332,6 +333,8 @@ public class NPC_staff : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         // 음료 나옴
         drinks[drink_num].SetActive(true); // 음료 이미지
+        drinks[drink_num].transform.position = new Vector3(-3.32f,-1.86f,-0.7f);
+        ScoreManager.instance.AddItem(drinks[drink_num]);
         drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = true; // 대사
         staff_audio_d[drink_num].Play();
         staff_bubble1.GetComponent<Renderer>().enabled = true; // 말풍선
@@ -357,12 +360,17 @@ public class NPC_staff : MonoBehaviour
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy2.GetComponent<TextMeshProUGUI>().enabled = true;
 
-        int stagescore = ScoreManager.instance.GetTotalScore();
+        int stagescore = ScoreManager.instance.GetStageScore(2);
         UnityEngine.Debug.Log("스테이지2 점수 : " + stagescore);
+
+        drinks[drink_num].transform.position = new Vector3(0f, -3f, -3f);
 
         star1.SetActive(true);
         star2.SetActive(true);
         star3.SetActive(true);
+
+        yield return new WaitForSeconds(a_fairy3.clip.length + 2.0f);
+        next_button.SetActive(true);
     }
 
     IEnumerator TriggerEvent_bad(float waitTime) // 부적절한 음료 나옴
@@ -390,8 +398,12 @@ public class NPC_staff : MonoBehaviour
         fairy3.GetComponent<TextMeshProUGUI>().enabled = true;
         a_fairy3.Play();
 
-        int stagescore = ScoreManager.instance.GetTotalScore();
+        int stagescore = ScoreManager.instance.GetStageScore(2);
         UnityEngine.Debug.Log("스테이지2 점수 : " + stagescore);
+
+        drinks[drink_num].transform.position = new Vector3(0f, -3f, -3f);
+
+        
 
         if (stagescore == 1)
         {
@@ -402,5 +414,7 @@ public class NPC_staff : MonoBehaviour
             star1.SetActive(true);
             star3.SetActive(true);
         }
+        yield return new WaitForSeconds(a_fairy3.clip.length + 2.0f);
+        next_button.SetActive(true);
     }
 }

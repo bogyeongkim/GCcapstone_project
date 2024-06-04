@@ -13,24 +13,21 @@ public class reaction1 : MonoBehaviour
     public GameObject mainmenu_button;
     public GameObject quit_button;
     public GameObject bubble;
-    //public GameObject fairy;
-    //public GameObject blank;
-
 
     public TextMeshProUGUI dragon_line1;
     public TextMeshProUGUI dragon_line2;
     public TextMeshProUGUI dragon_line3;
-    //public TextMeshProUGUI fairy1;
+    public TextMeshProUGUI[] feedbacks;
 
     public GameObject dragon;
 
     public AudioSource a_dragon_line1;
     public AudioSource a_dragon_line2;
     public AudioSource a_dragon_line3;
-    //public AudioSource a_fairy1;
     public AudioSource bgm;
     public AudioSource bgm_next;
-    
+    public AudioSource[] a_feedbacks;
+
 
     public Animator dragonAnimator;
 
@@ -55,17 +52,54 @@ public class reaction1 : MonoBehaviour
         dragon_line1.enabled = true;
         a_dragon_line1.Play();
 
-        yield return new WaitForSeconds(a_dragon_line1.clip.length + 1.0f);
+
+
+        if (gameObject.name == "reaction2")
+        {
+            yield return new WaitForSeconds(a_dragon_line1.clip.length + 1.0f);
+            dragon_line1.enabled = false;
+
+            feedbacks[0].enabled = true;
+            a_feedbacks[0].Play();
+
+            yield return new WaitForSeconds(a_feedbacks[0].clip.length + 1.0f);
+            feedbacks[0].enabled = false;
+
+            Dictionary<int, int> allStageScores = ScoreManager.instance.GetAllStageScores();
+
+            foreach (var stageScore in allStageScores)
+            {
+                int stageNumber = stageScore.Key;
+                int score = stageScore.Value;
+
+                if (score <= 1)
+                {
+
+                    feedbacks[stageNumber].enabled = true;
+                    a_feedbacks[stageNumber].Play();
+
+                    yield return new WaitForSeconds(a_feedbacks[stageNumber].clip.length + 1.0f);
+                    feedbacks[stageNumber].enabled = false;
+                }
+
+            }
+
+        }
+        else
+        {
+            yield return new WaitForSeconds(a_dragon_line1.clip.length + 1.0f);
+            dragon_line1.enabled = false;
+        }
 
         // "너도 목소리 조절을 못하는 녀석이구나!"
         // "공공장소에선 목소리 조절을 더 잘하도록 해"
         // "네 덕분에 마음이 풀렸어"
-        dragon_line1.enabled = false;
         dragon_line2.enabled = true;
         a_dragon_line2.Play();
 
-        yield return new WaitForSeconds(a_dragon_line2.clip.length + 1.0f);
+        
 
+        yield return new WaitForSeconds(a_dragon_line2.clip.length + 1.0f);
         dragon_line2.enabled = false;
 
         if (gameObject.name == "reaction1")

@@ -4,6 +4,8 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Security.Cryptography;
+using System.Collections.Specialized;
 
 public class NPCMoveOnClick : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class NPCMoveOnClick : MonoBehaviour
 
     private Vector3 targetPosition1;
     private Vector3 targetPosition2;
+    private Vector3 setPosition;
 
     //텍스트 및 이미지 오브젝트
     public GameObject next_NPC;
@@ -30,6 +33,7 @@ public class NPCMoveOnClick : MonoBehaviour
     public GameObject star1;
     public GameObject star2;
     public GameObject star3;
+    public GameObject next_button;
 
     public GameObject player2;
     public GameObject background;
@@ -37,6 +41,7 @@ public class NPCMoveOnClick : MonoBehaviour
     public GameObject star_1;
     public GameObject star_2;
     public GameObject star_3;
+    public GameObject book_item;
 
 
     public TextMeshProUGUI fairy_text;
@@ -69,10 +74,17 @@ public class NPCMoveOnClick : MonoBehaviour
             UnityEngine.Debug.LogError("SoundAnalyzer 컴포넌트를 찾을 수 없습니다.");
         }
         //fairy_text.GetComponent<TextMeshProUGUI>().enabled = true;
-        if (gameObject.name == "NPC01")
-            a_fairy_text.Play();
+        if (gameObject.name == "NPC_01")
+            StartCoroutine(Fairy_NPC01());
         fairy.GetComponent<Renderer>().enabled = true;
         arrow02.GetComponent<Renderer>().enabled = true;
+    }
+
+    IEnumerator Fairy_NPC01()
+    {
+        yield return new WaitForSeconds(2);
+        a_fairy_text.Play();
+        A_click.a_click_bool = true;
     }
 
     void Update()
@@ -91,25 +103,29 @@ public class NPCMoveOnClick : MonoBehaviour
     // NPC 클릭시 호출되는 메소드
     private void OnMouseDown()
     {
-        isMoving = true;
-        UnityEngine.Debug.Log("click");
-        arrow02.GetComponent<Renderer>().enabled = false;
-        fairy_text.GetComponent<TextMeshProUGUI>().enabled = false;
-        fairy.GetComponent<Renderer>().enabled = false;
-        
+        if (A_click.a_click_bool) 
+        {
+            A_click.a_click_bool = false;
+            isMoving = true;
+            UnityEngine.Debug.Log("click");
+            arrow02.GetComponent<Renderer>().enabled = false;
+            fairy_text.GetComponent<TextMeshProUGUI>().enabled = false;
+            fairy.GetComponent<Renderer>().enabled = false;
+        }
     }
 
     // 플레이어 위치 근처로 NPC 이동
     void MoveToPlayer()
     {
         float step = moveSpeed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, player.position, step);
+        Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
 
         // 플레이어 run
         playerAnimator.SetBool("isRun",true);
 
         // NPC가 플레이어 근처에 도달했는지 확인
-        if (Vector3.Distance(transform.position, player.position) < 3.0f)
+        if (Vector3.Distance(transform.position, player.position) < 4.0f)
         {
             isMoving = false;
             playerAnimator.SetBool("isRun", false);
@@ -179,8 +195,8 @@ public class NPCMoveOnClick : MonoBehaviour
                 }
                 else // 데시벨 값이 적절한 경우
                 {
-                    ScoreManager.instance.AddScore(1);
-                    int stagescore = ScoreManager.instance.GetTotalScore();
+                    ScoreManager.instance.AddScore2(1,1);
+                    int stagescore = ScoreManager.instance.GetStageScore(1);
                     if (stagescore == 1) 
                     {
                         star1.SetActive(true);
@@ -251,7 +267,7 @@ public class NPCMoveOnClick : MonoBehaviour
         response.GetComponent<TextMeshProUGUI>().enabled = true;
         a_response.Play();
         
-        int stagescore = ScoreManager.instance.GetTotalScore();
+        int stagescore = ScoreManager.instance.GetStageScore(1);
         UnityEngine.Debug.Log("현재 점수 : " + stagescore);
         StartCoroutine(WaitAndTriggerNext(4.0f));
     }
@@ -283,17 +299,21 @@ public class NPCMoveOnClick : MonoBehaviour
             UnityEngine.Debug.Log("Next!");
             next_fairy_text.GetComponent<TextMeshProUGUI>().enabled = true;
             a_next_fairy_text.Play();
-            
+            A_click.a_click_bool = true;
+
             fairy.GetComponent<Renderer>().enabled = true;
 
-            if (gameObject.name == "NPC03")
+            if (gameObject.name == "NPC_03")
             {
-                //end_text.GetComponent<TextMeshProUGUI>().enabled = true;
                 //fairy.GetComponent<Renderer>().enabled = true;
-                int stagescore = ScoreManager.instance.GetTotalScore();
+                int stagescore = ScoreManager.instance.GetStageScore(1);
                 UnityEngine.Debug.Log("스테이지1 총 점수 : "+ stagescore);
                 player2.SetActive(false);
                 background.GetComponent<Renderer>().enabled = true;
+                book_item.GetComponent<Renderer>().enabled = true;
+                ScoreManager.instance.AddItem(book_item);
+                book_item.transform.position = new Vector3(0f, -3f, -3f);
+                StartCoroutine(Next_Button(a_next_fairy_text.clip.length + 1.5f));
 
                 if (stagescore == 1)
                 {
@@ -313,6 +333,12 @@ public class NPCMoveOnClick : MonoBehaviour
 
             }
             else { arrow02.GetComponent<Renderer>().enabled = true; }
+            
         }
+    }
+    IEnumerator Next_Button(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        next_button.SetActive(true);
     }
 }
