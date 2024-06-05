@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1819315357551032100}
   - component: {fileID: 39014106065770783}
   - component: {fileID: 617081057573735698}
+  - component: {fileID: 6555905471588287441}
   m_Layer: 0
   m_Name: 001 Student 1 Character
   m_TagString: Player
@@ -176,6 +177,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6555905471588287441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4824676924531819671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2292f2cab522bda408b35ab01dc5483f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterCollider: {fileID: 39014106065770783}
+  characterRigidbody: {fileID: 617081057573735698}
+  scaleForStage1: {x: 1.2, y: 1.2, z: 1.2}
 --- !u!1 &6378557997767333071
 GameObject:
   m_ObjectHideFlags: 0
