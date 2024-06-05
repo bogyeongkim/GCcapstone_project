@@ -18,9 +18,13 @@ public class PlayerAnimation : MonoBehaviour
 {
     private Animator playerAnimator;
 
-    private void Start()
+    private void Awake()
     {
         playerAnimator = transform.GetChild(0).GetComponent<Animator>();
+        if (playerAnimator == null)
+        {
+            playerAnimator = GetComponent<Animator>();
+        }
     }
 
     public void SetTrigger(AnimParam anim)

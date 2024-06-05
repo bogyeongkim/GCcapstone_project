@@ -82,7 +82,6 @@ public class Player : MonoBehaviour, IDamageAble
         // 최대 점프 파워와 소리 데시벨에 비례하여 점프 파워 계산
         float jumpPower = maxJumpPower * ((db / 60f));
         rb.velocity = new Vector2(rb.velocity.x, jumpPower);
-        Debug.Log("Jump power applied: " + jumpPower);
     }
 
     private void CheckGrounded()
