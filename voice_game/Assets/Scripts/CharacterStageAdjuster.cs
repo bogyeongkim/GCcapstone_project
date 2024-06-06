@@ -25,16 +25,16 @@ public class CharacterStageAdjuster : MonoBehaviour
         
         if (currentSceneName.ToLower() == "stage1") // 대소문자 구분 없이 비교
         {
-            // 씬 이름이 "stage1"이면 콜라이더를 비활성화하고, 스케일과 중력 스케일을 조정함
+            // 씬 이름이 "stage1"이면 콜라이더를 비활성화하고, Rigidbody2D를 비활성화하며, 스케일을 조정함
             if (characterCollider != null) characterCollider.enabled = false;
-            if (characterRigidbody != null) characterRigidbody.gravityScale = 0; // 중력 영향 없음
+            if (characterRigidbody != null) characterRigidbody.simulated = false; // Rigidbody2D 비활성화
             transform.localScale = scaleForStage1;
         }
         else
         {
-            // 그 외의 씬에서는 캐릭터의 콜라이더를 활성화하고, 기본 스케일과 중력 스케일로 돌아감
+            // 그 외의 씬에서는 캐릭터의 콜라이더와 Rigidbody2D를 활성화하고, 기본 스케일로 돌아감
             if (characterCollider != null) characterCollider.enabled = true;
-            if (characterRigidbody != null) characterRigidbody.gravityScale = defaultGravityScale; // 기본 중력 스케일로 복원
+            if (characterRigidbody != null) characterRigidbody.simulated = true; // Rigidbody2D 활성화
             transform.localScale = defaultScale;
         }
     }
