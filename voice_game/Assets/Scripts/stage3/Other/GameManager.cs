@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -16,6 +17,15 @@ public class GameManager : Singleton<GameManager>
     public GameObject star1;
     public GameObject star2;
     public GameObject star3;
+
+    public GameObject next_button;
+    public GameObject fairy;
+    public GameObject blank;
+
+    public TextMeshProUGUI fairy_text;
+
+    public AudioSource a_fairy_text;
+    public AudioSource bgm;
 
     private void Start()
     {
@@ -37,6 +47,8 @@ public class GameManager : Singleton<GameManager>
         {
             isGameEnd = true;
             CalculateStage3Score(); // 게임이 끝나면 stage3 점수를 계산
+            GameOver();
+            
         }
     }
 
@@ -65,6 +77,24 @@ public class GameManager : Singleton<GameManager>
             star3.SetActive(true);
         }*/
 
-        ScoreManager.instance.AddScore(Stage3Score);
+        ScoreManager.instance.AddScore2(3,Stage3Score);
+    }
+
+    public void GameOver()
+    {
+        bgm.Stop();
+        fairy.GetComponent<Renderer>().enabled = true;
+        blank.GetComponent<Renderer>().enabled = true;
+        fairy_text.GetComponent<TextMeshProUGUI>().enabled = true;
+        a_fairy_text.Play();
+
+        StartCoroutine(TriggerNext(a_fairy_text.clip.length + 2.0f));
+    }
+
+    IEnumerator TriggerNext(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        next_button.SetActive(true);
     }
 }

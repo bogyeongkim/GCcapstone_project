@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class UIManager : MonoBehaviour
 {
@@ -12,10 +14,11 @@ public class UIManager : MonoBehaviour
     public List<GameObject> hpImageList = new List<GameObject>();
 
     public GameObject gameOverBg;
-    
+
     private void Start()
     {
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+        
     }
 
     private void Update()
@@ -41,7 +44,7 @@ public class UIManager : MonoBehaviour
                 hpImageList.Add(PoolManager.Instance.GetPool(1, hpImageParent));
             }
         }
-        
+
         else if (childCount > curHp)
         {
             // 현재 체력만큼 이미지 제거
@@ -56,6 +59,6 @@ public class UIManager : MonoBehaviour
 
     public void OnGameOver()
     {
-        gameOverBg.SetActive(true);
+        
     }
 }

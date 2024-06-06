@@ -40,6 +40,6 @@ public class StartGame : MonoBehaviour
 
     void LoadNextScene()
     {
-        SceneManager.LoadScene("stage1");
+        SceneManager.LoadScene("Menu");
     }
 }
