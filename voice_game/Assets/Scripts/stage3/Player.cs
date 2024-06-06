@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, IDamageAble
 {
@@ -27,6 +28,15 @@ public class Player : MonoBehaviour, IDamageAble
     
     private void Start()
     {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        if (currentSceneName.ToLower() == "stage1") // 대소문자 구분 없이 비교
+        {
+            UnityEngine.Debug.Log("end");
+            this.enabled = false;
+            return;
+        }
+
         SoundAnalyzer3 = FindObjectOfType<SoundAnalyzer3>();
         uiManager = FindObjectOfType<UIManager>();
         

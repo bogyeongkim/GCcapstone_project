@@ -9,13 +9,15 @@ using System.Collections.Specialized;
 
 public class NPCMoveOnClick : MonoBehaviour
 {
-    public Transform player; // 플레이어의 Transform, Inspector에서 할당
+
+    private Transform player;
+    private Animator playerAnimator;
+    private GameObject player2;
+
 
     public float moveSpeed = 5f; // NPC 이동 속도
     private bool isMoving = false; // NPC 움직임 상태 체크
     private bool isNext = false; // 끝났는지 체크
-
-    public Animator playerAnimator; // 플레이어 애니메이션 변경
 
     private SoundAnalyzer soundAnalyzer;
 
@@ -35,7 +37,7 @@ public class NPCMoveOnClick : MonoBehaviour
     public GameObject star3;
     public GameObject next_button;
 
-    public GameObject player2;
+    
     public GameObject background;
 
     public GameObject star_1;
@@ -62,7 +64,7 @@ public class NPCMoveOnClick : MonoBehaviour
 
     void Start()
     {
-        
+        FindPlayerObject();
         // SoundAnalyzer 컴포넌트 찾기
         soundAnalyzer = FindObjectOfType<SoundAnalyzer>();
         if (soundAnalyzer != null)
@@ -78,6 +80,40 @@ public class NPCMoveOnClick : MonoBehaviour
             StartCoroutine(Fairy_NPC01());
         fairy.GetComponent<Renderer>().enabled = true;
         arrow02.GetComponent<Renderer>().enabled = true;
+    }
+
+    void FindPlayerObject()
+    {
+        // "Player" 이름의 오브젝트를 먼저 찾고, 없다면 "Player2" 이름의 오브젝트를 찾음
+        GameObject playerObject = GameObject.Find("Player(Clone)") ?? GameObject.Find("Player2(Clone)");
+
+        if (playerObject != null)
+        {
+            player2 = playerObject;
+            player = playerObject.transform;
+
+            // 만약 "Player" 오브젝트를 찾았다면, 하위의 "student" 오브젝트를 찾고 Animator를 가져옴
+            if (playerObject.name == "Player(Clone)")
+            {
+                Transform studentTransform = player.Find("CollegeStudent");
+                if (studentTransform != null)
+                {
+                    playerAnimator = studentTransform.GetComponent<Animator>();
+                }
+                else
+                {
+                    UnityEngine.Debug.LogError("Student object not found in the Player.");
+                }
+            }
+            else // "Player2" 오브젝트인 경우, 해당 오브젝트의 Animator를 가져옴
+            {
+                playerAnimator = playerObject.GetComponent<Animator>();
+            }
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("Player or Player2 object not found in the scene.");
+        }
     }
 
     IEnumerator Fairy_NPC01()
@@ -118,16 +154,16 @@ public class NPCMoveOnClick : MonoBehaviour
     void MoveToPlayer()
     {
         float step = moveSpeed * Time.deltaTime;
-        Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
+        Vector3 targetPosition = new Vector3(-7.0f, transform.position.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
 
         // 플레이어 run
         playerAnimator.SetBool("isRun",true);
 
-        // NPC가 플레이어 근처에 도달했는지 확인
-        if (Vector3.Distance(transform.position, player.position) < 4.0f)
+        if (Vector3.Distance(transform.position, targetPosition) < 2.5f)
         {
             isMoving = false;
+            UnityEngine.Debug.Log("isRun???");
             playerAnimator.SetBool("isRun", false);
             // 이동 끝나면 대화 시작
             TriggerDialogue();

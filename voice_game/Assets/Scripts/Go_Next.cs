@@ -12,8 +12,15 @@ public class Go_Next : MonoBehaviour
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
 
-        /*
-        if (currentSceneName == "intro")
+        if (currentSceneName == "Title")
+        {
+            nextscene = "Menu";
+        }
+        else if (currentSceneName == "Menu")
+        {
+            nextscene = "intro";
+        }
+        else if (currentSceneName == "intro")
         {
             nextscene = "info_stage1";
         }
@@ -40,20 +47,6 @@ public class Go_Next : MonoBehaviour
         else if (currentSceneName == "stage3")
         {
             nextscene = "EndingScene";
-        }
-        */
-        if (currentSceneName == "stage1")
-        {
-            nextscene = "stage2";
-        }
-        else if (currentSceneName == "stage2")
-        {
-            nextscene = "EndingScene";
-            UnityEngine.Debug.Log("goending");
-        }
-        else
-        {
-            UnityEngine.Debug.Log("No scene");
         }
     }
 
