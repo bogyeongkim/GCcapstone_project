@@ -161,7 +161,7 @@ public class NPC_staff : MonoBehaviour
 
             foreach (float dbValue in DBL)
             {
-                if (dbValue != 0f) // 0이 아닌 값인 경우에만 처리
+                if (dbValue > 10f) // 0이 아닌 값인 경우에만 처리
                 {
                     sumDb += dbValue;
                     countDb++;

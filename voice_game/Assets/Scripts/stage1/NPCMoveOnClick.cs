@@ -204,7 +204,7 @@ public class NPCMoveOnClick : MonoBehaviour
              */
             foreach (float dbValue in DBL)
             {
-                if (dbValue > 45) // 45보다 큰 값이 있는 경우
+                if (dbValue > 55) // 45보다 큰 값이 있는 경우
                 {
                     TriggerEvent_loud(); // 이벤트를 발생시킴
                     isLoud = true;
