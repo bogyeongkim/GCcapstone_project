@@ -28,6 +28,8 @@ public class DbVisualizer : MonoBehaviour
 
         if (dbValue < 45)
             newColor = Color.green;
+        else if(dbValue < 60)
+            newColor = Color.yellow;
         else
             newColor = Color.red;
 
