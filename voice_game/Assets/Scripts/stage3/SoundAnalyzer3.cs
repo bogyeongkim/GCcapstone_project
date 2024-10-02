@@ -6,6 +6,8 @@ using System.IO;
 
 public class SoundAnalyzer3 : MonoBehaviour
 {
+    public DbVisualizer dbVisualizer; // DbVisualizer에 대한 참조
+
     const float REFERENCE = 0.00002f; // ??????? ??
 
     public string microphoneName; // ????? ????? ???
@@ -149,7 +151,8 @@ public class SoundAnalyzer3 : MonoBehaviour
 
             // ????? ?? ??????? ???
             dbValues.Add(dbA);
-            
+            dbVisualizer.UpdateDbVisualization(dbA); // 시각화 업데이트
+
             UnityEngine.Debug.Log("    dBA : " + dbA);
 
             //UnityEngine.Debug.Log("dB : " + db);

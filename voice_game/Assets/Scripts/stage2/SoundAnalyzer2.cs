@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class SoundAnalyzer2 : MonoBehaviour
 {
+    public DbVisualizer dbVisualizer; // DbVisualizer에 대한 참조
 
     const float REFERENCE = 0.00002f; // 레퍼런스 값
 
@@ -156,6 +157,8 @@ public class SoundAnalyzer2 : MonoBehaviour
                 // 데시벨 값 리스트에 추가
                 dbValues.Add(dbA);
 
+                dbVisualizer.UpdateDbVisualization(dbA); // 시각화 업데이트
+
                 UnityEngine.Debug.Log("[" + dbValues.Count + "]" + "dBA : " + dbA);
 
                 if (dbA > warningThreshold)
@@ -236,6 +239,7 @@ public class SoundAnalyzer2 : MonoBehaviour
 
     public List<float> GetDbValues()
     {
+        dbVisualizer.SetZero(); // 시각화 초기화
         return dbValues;
     }
 
