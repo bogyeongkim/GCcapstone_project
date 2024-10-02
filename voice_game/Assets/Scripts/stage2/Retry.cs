@@ -10,6 +10,7 @@ public class Retry : MonoBehaviour
     public GameObject blank_image;
     public TextMeshProUGUI fairy1;
     public TextMeshProUGUI retry;
+    public TextMeshProUGUI cafe_board;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,7 @@ public class Retry : MonoBehaviour
         blank_image.GetComponent<Renderer>().enabled = false;
         fairy1.GetComponent<TextMeshProUGUI>().enabled = false;
         retry.GetComponent<TextMeshProUGUI>().enabled = false;
+        cafe_board.GetComponent<TextMeshProUGUI>().enabled = true;
         gameObject.SetActive(false);
     }
 }

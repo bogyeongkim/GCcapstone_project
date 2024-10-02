@@ -11,10 +11,14 @@ public class CharacterStageAdjuster : MonoBehaviour
     private Vector3 defaultScale; // 캐릭터의 기본 스케일 값
     private float defaultGravityScale; // 캐릭터의 기본 중력 스케일 값
 
+    private Player playerScript; 
+
     void Start()
     {
         defaultScale = transform.localScale; // 시작할 때 캐릭터의 현재 스케일을 기본 스케일 값으로 저장
         defaultGravityScale = characterRigidbody.gravityScale; // 시작할 때 캐릭터의 현재 중력 스케일을 기본 값으로 저장
+        playerScript = GetComponent<Player>();
+
         AdjustSettingsBasedOnScene();
     }
 
@@ -28,6 +32,7 @@ public class CharacterStageAdjuster : MonoBehaviour
             // 씬 이름이 "stage1"이면 콜라이더를 비활성화하고, Rigidbody2D를 비활성화하며, 스케일을 조정함
             if (characterCollider != null) characterCollider.enabled = false;
             if (characterRigidbody != null) characterRigidbody.simulated = false; // Rigidbody2D 비활성화
+            if (playerScript != null) playerScript.enabled = false; // Player 스크립트 비활성화
             transform.localScale = scaleForStage1;
         }
         else
@@ -35,6 +40,7 @@ public class CharacterStageAdjuster : MonoBehaviour
             // 그 외의 씬에서는 캐릭터의 콜라이더와 Rigidbody2D를 활성화하고, 기본 스케일로 돌아감
             if (characterCollider != null) characterCollider.enabled = true;
             if (characterRigidbody != null) characterRigidbody.simulated = true; // Rigidbody2D 활성화
+            if (playerScript != null) playerScript.enabled = true; // Player 스크립트 활성화
             transform.localScale = defaultScale;
         }
     }
