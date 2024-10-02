@@ -53,6 +53,7 @@ public class NPCMoveOnClick : MonoBehaviour
     public TextMeshProUGUI quiet;
     public TextMeshProUGUI good;
     public TextMeshProUGUI next_fairy_text;
+    public TextMeshProUGUI SoundBar;
 
     public AudioSource a_fairy_text;
     public AudioSource a_response;
@@ -204,7 +205,7 @@ public class NPCMoveOnClick : MonoBehaviour
              */
             foreach (float dbValue in DBL)
             {
-                if (dbValue > 55) // 45보다 큰 값이 있는 경우
+                if (dbValue > 50) // 50보다 큰 값이 있는 경우
                 {
                     TriggerEvent_loud(); // 이벤트를 발생시킴
                     isLoud = true;
@@ -350,6 +351,8 @@ public class NPCMoveOnClick : MonoBehaviour
                 ScoreManager.instance.AddItem(book_item);
                 book_item.transform.position = new Vector3(0f, -3f, -3f);
                 StartCoroutine(Next_Button(a_next_fairy_text.clip.length + 1.5f));
+
+                SoundBar.GetComponent<TextMeshProUGUI>().enabled = false;
 
                 if (stagescore == 1)
                 {
