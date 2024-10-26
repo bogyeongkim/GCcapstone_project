@@ -41,6 +41,8 @@ public class NPC_staff : MonoBehaviour
     public GameObject star2;
     public GameObject star3;
 
+    public GameObject bar;
+
     public GameObject[] drinkObjects; // 음료 오브젝트 배열
     public GameObject[] drinks;
     public TextMeshProUGUI[] drinks_t;
@@ -62,6 +64,7 @@ public class NPC_staff : MonoBehaviour
     public TextMeshProUGUI staff_bad1;
     public TextMeshProUGUI staff_bad2;
     public TextMeshProUGUI Sound;
+    public TextMeshProUGUI value;
 
     //오디오
     public AudioSource staff_audio1; 
@@ -189,7 +192,7 @@ public class NPC_staff : MonoBehaviour
                 }
                 
             }
-            else if (averageDb > 50) 
+            else if (averageDb > 45) 
             {
                 TriggerEvent_loud(); // turn 상관없이
             }
@@ -225,6 +228,8 @@ public class NPC_staff : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         staff_line3.GetComponent<TextMeshProUGUI>().enabled = false;
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
+        value.GetComponent<TextMeshProUGUI>().enabled = false;
+        bar.GetComponent<Renderer>().enabled = false;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         blank_image.GetComponent<Renderer>().enabled = true;
         wait.GetComponent<TextMeshProUGUI>().enabled = true;
@@ -273,6 +278,8 @@ public class NPC_staff : MonoBehaviour
         blank_image.GetComponent<Renderer>().enabled = false;
         wait.GetComponent<TextMeshProUGUI>().enabled = false;
         Sound.GetComponent<TextMeshProUGUI>().enabled = true;
+        value.GetComponent<TextMeshProUGUI>().enabled = true;
+        bar.GetComponent<Renderer>().enabled = true;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = true;
         staff_bubble1.GetComponent<Renderer>().enabled = false; // 말풍선
         StartCoroutine(Get_drink(1.0f));
@@ -310,6 +317,8 @@ public class NPC_staff : MonoBehaviour
         blank.GetComponent<Renderer>().enabled = true;
         blank_image.GetComponent<Renderer>().enabled = true;
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
+        value.GetComponent<TextMeshProUGUI>().enabled = false;
+        bar.GetComponent<Renderer>().enabled = false;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy1.GetComponent<TextMeshProUGUI>().enabled = true;
         a_fairy1.Play();
@@ -362,6 +371,8 @@ public class NPC_staff : MonoBehaviour
         blank.GetComponent<Renderer>().enabled = true;
         blank_image.GetComponent<Renderer>().enabled = true; //무지배경 깔지말지 고민
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
+        value.GetComponent<TextMeshProUGUI>().enabled = false;
+        bar.GetComponent<Renderer>().enabled = false;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy2.GetComponent<TextMeshProUGUI>().enabled = true;
 
@@ -400,6 +411,8 @@ public class NPC_staff : MonoBehaviour
         blank.GetComponent<Renderer>().enabled = true;
         blank_image.GetComponent<Renderer>().enabled = true; //무지배경 깔지말지 고민
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
+        value.GetComponent<TextMeshProUGUI>().enabled = false;
+        bar.GetComponent<Renderer>().enabled = false;
         fairy3.GetComponent<TextMeshProUGUI>().enabled = true;
         a_fairy3.Play();
 
@@ -409,6 +422,8 @@ public class NPC_staff : MonoBehaviour
         drinks[drink_num].transform.position = new Vector3(0f, -3f, -3f);
 
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
+        value.GetComponent<TextMeshProUGUI>().enabled = false;
+        bar.GetComponent<Renderer>().enabled = false;
 
         if (stagescore == 1)
         {

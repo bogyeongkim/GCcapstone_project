@@ -20,7 +20,6 @@ public class SoundAnalyzer2 : MonoBehaviour
 
     //******************************************************경고 추가
 
-    public float warningThreshold = 60f;
     public GameObject warningUI;
     public Image screenOverlay;
     private bool isWarningActive = false;
@@ -161,7 +160,7 @@ public class SoundAnalyzer2 : MonoBehaviour
 
                 UnityEngine.Debug.Log("[" + dbValues.Count + "]" + "dBA : " + dbA);
 
-                if (dbA > warningThreshold)
+                if (dbA > 60f)
                 {
                     TriggerWarning();
                 }
