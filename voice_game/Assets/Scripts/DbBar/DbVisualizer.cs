@@ -44,7 +44,7 @@ public class DbVisualizer : MonoBehaviour
             else
                 newColor = new Color32(222, 79, 79, 255);
         }
-        else 
+        else if (currentSceneName == "stage2")
         {
             if (dbValue < 30)
                 newColor = new Color32(189,189,189, 255); //회색
@@ -54,6 +54,10 @@ public class DbVisualizer : MonoBehaviour
                 newColor = new Color32(250, 237, 125, 255);
             else
                 newColor = new Color32(222, 79, 79, 255);
+        }
+        else
+        {
+            newColor = new Color32(188, 229, 92, 255); //연두
         }
 
 
@@ -70,5 +74,7 @@ public class DbVisualizer : MonoBehaviour
     public void SetZero()
     {
         dbBar.localScale = new Vector3(1, 0, 1);
+        uiText.text = "";
+
     }
 }
