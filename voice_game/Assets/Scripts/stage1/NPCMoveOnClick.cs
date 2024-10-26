@@ -25,6 +25,7 @@ public class NPCMoveOnClick : MonoBehaviour
 
     private Vector3 targetPosition1;
     private Vector3 targetPosition2;
+    private Vector3 targetPosition3;
     private Vector3 setPosition;
 
     //텍스트 및 이미지 오브젝트
@@ -36,15 +37,15 @@ public class NPCMoveOnClick : MonoBehaviour
     public GameObject star2;
     public GameObject star3;
     public GameObject next_button;
+    public GameObject bgi;
 
-    
     public GameObject background;
 
     public GameObject star_1;
     public GameObject star_2;
     public GameObject star_3;
     public GameObject book_item;
-
+    public GameObject bar;
 
     public TextMeshProUGUI fairy_text;
     public TextMeshProUGUI line;
@@ -54,6 +55,7 @@ public class NPCMoveOnClick : MonoBehaviour
     public TextMeshProUGUI good;
     public TextMeshProUGUI next_fairy_text;
     public TextMeshProUGUI SoundBar;
+    public TextMeshProUGUI value;
 
     public AudioSource a_fairy_text;
     public AudioSource a_response;
@@ -154,9 +156,12 @@ public class NPCMoveOnClick : MonoBehaviour
     // 플레이어 위치 근처로 NPC 이동
     void MoveToPlayer()
     {
+        /////////////////////////////////////////////////////////////
         float step = moveSpeed * Time.deltaTime;
         Vector3 targetPosition = new Vector3(-7.0f, transform.position.y, transform.position.z);
+        Vector3 targetPosition4 = new Vector3(bgi.transform.position.x - 7.0f, bgi.transform.position.y, bgi.transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+        bgi.transform.position = Vector3.MoveTowards(bgi.transform.position, targetPosition4, step);
 
         // 플레이어 run
         playerAnimator.SetBool("isRun",true);
@@ -205,7 +210,7 @@ public class NPCMoveOnClick : MonoBehaviour
              */
             foreach (float dbValue in DBL)
             {
-                if (dbValue > 50) // 50보다 큰 값이 있는 경우
+                if (dbValue > 40) // 40보다 큰 값이 있는 경우
                 {
                     TriggerEvent_loud(); // 이벤트를 발생시킴
                     isLoud = true;
@@ -223,7 +228,7 @@ public class NPCMoveOnClick : MonoBehaviour
                 countDb = 1;
             }
 
-            if (!isLoud) // 45를 초과하는 값이 없는 경우
+            if (!isLoud) // 40를 초과하는 값이 없는 경우
             {
                 float averageDb = sumDb / countDb; // 평균 데시벨 값 계산
                 if (averageDb < 10) // 평균 데시벨 값이 10보다 작은 경우
@@ -316,14 +321,17 @@ public class NPCMoveOnClick : MonoBehaviour
         //next_NPC.SetActive(true);
         targetPosition1 = new Vector3(transform.position.x - 8.0f, transform.position.y, transform.position.z);
         targetPosition2 = new Vector3(next_NPC.transform.position.x - 8.0f, next_NPC.transform.position.y, next_NPC.transform.position.z);
+        targetPosition3 = new Vector3(bgi.transform.position.x - 8.0f, bgi.transform.position.y, bgi.transform.position.z);
         isNext = true;
     }
 
     void TriggerEvent_Next()
     {
+        /////////////////////////////////////////////////////////////
         float step = moveSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition1, step);
         next_NPC.transform.position = Vector3.MoveTowards(next_NPC.transform.position, targetPosition2, step);
+        bgi.transform.position = Vector3.MoveTowards(bgi.transform.position, targetPosition3, step);
 
         // 플레이어 run
         playerAnimator.SetBool("isRun", true);
@@ -353,6 +361,9 @@ public class NPCMoveOnClick : MonoBehaviour
                 StartCoroutine(Next_Button(a_next_fairy_text.clip.length + 1.5f));
 
                 SoundBar.GetComponent<TextMeshProUGUI>().enabled = false;
+                value.GetComponent<TextMeshProUGUI>().enabled = false;
+                bar.GetComponent<Renderer>().enabled = false;
+
 
                 if (stagescore == 1)
                 {
