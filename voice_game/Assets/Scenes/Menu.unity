@@ -1611,10 +1611,10 @@ MonoBehaviour:
   characters:
   - prefab: {fileID: 7695167639263296709, guid: 15fd852e7dcbd424f96e0aa67acd6b00, type: 3}
     name: 
-    icon: {fileID: 21300000, guid: 6e9611a23acb95b4eaa6b1c34db0e784, type: 3}
+    icon: {fileID: 21300000, guid: 097926166041c944098f0473a7f50a01, type: 3}
   - prefab: {fileID: 4824676924531819671, guid: e43fd35a3120b6f42a71fec6142e698a, type: 3}
     name: 
-    icon: {fileID: 21300000, guid: 44d2293b70fa08743a61ce987b2ef1ed, type: 3}
+    icon: {fileID: 21300000, guid: b59449c83c275b542bee29aed23cffa6, type: 3}
   currentCharacter:
     prefab: {fileID: 0}
     name: 
