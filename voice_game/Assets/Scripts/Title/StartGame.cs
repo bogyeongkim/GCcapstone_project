@@ -10,7 +10,7 @@ public class StartGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(EnableStart(4f)); 
+        StartCoroutine(EnableStart(4.5f)); 
     }
 
     IEnumerator EnableStart(float delay)
