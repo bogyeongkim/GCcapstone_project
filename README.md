@@ -5,7 +5,8 @@
 Experience gameplay driven by the dynamics of your voice volume, crafted as an educational tool to teach children how to modulate and control their voices.
 
 ---
-
+![제목 없는 동영상 - Clipchamp로 제작](https://github.com/user-attachments/assets/1dc84c94-aa41-479a-965c-f8450767edff)
+---
 ## 프로젝트 소개
 유니티엔진을 이용하여 제작한 교육용 게임으로 목소리의 크기를 조절하며 게임을 플레이합니다.
 
