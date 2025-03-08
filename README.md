@@ -5,7 +5,8 @@
 Experience gameplay driven by the dynamics of your voice volume, crafted as an educational tool to teach children how to modulate and control their voices.
 
 ---
-![Uploading 제목 없는 동영상 - Clipchamp로 제작 (2).gif…]()
+
+![Uploading 제목 없는 동영상 - Clipchamp로 제작.gif…]()
 
 ---
 ## 프로젝트 소개
