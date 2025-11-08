@@ -5,8 +5,6 @@
 Experience gameplay driven by the dynamics of your voice volume, crafted as an educational tool to teach children how to modulate and control their voices.
 
 ---
-
----
 ## 프로젝트 소개
 유니티엔진을 이용하여 제작한 교육용 게임으로 목소리의 크기를 조절하며 게임을 플레이합니다.
 
