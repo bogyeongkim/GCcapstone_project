@@ -2769,6 +2769,7 @@ GameObject:
   - component: {fileID: 766414132}
   - component: {fileID: 766414134}
   - component: {fileID: 766414135}
+  - component: {fileID: 766414136}
   m_Layer: 0
   m_Name: microphone_icon
   m_TagString: Untagged
@@ -2900,6 +2901,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.12, y: 5.12}
   m_EdgeRadius: 0
+--- !u!114 &766414136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766414131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56073b7a15306a74d9220855626ca303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkColor: {r: 0, g: 0, b: 0, a: 1}
+  speed: 2.5
 --- !u!1 &822158475
 GameObject:
   m_ObjectHideFlags: 0
@@ -3511,6 +3526,8 @@ MonoBehaviour:
   isRecording: 0
   dbValues: []
   measurementInterval: 0.05
+  enableAutoCalibration: 1
+  calibrationDuration: 6
 --- !u!114 &1084528228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3677,6 +3694,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1161118834}
   - component: {fileID: 1161118833}
+  - component: {fileID: 1161118835}
   m_Layer: 0
   m_Name: arrow02
   m_TagString: Untagged
@@ -3725,7 +3743,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 38dc4704dd5e62e4182359d83b63fbba, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 857fba692fb75524fadeec3f2a9fbad2, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3745,12 +3763,26 @@ Transform:
   m_GameObject: {fileID: 1161118832}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.03, y: 0.68, z: -1}
-  m_LocalScale: {x: 0.2895653, y: 0.21942843, z: 0.27145898}
+  m_LocalPosition: {x: 6.93, y: 0.65, z: -1}
+  m_LocalScale: {x: 0.2895653, y: 0.21942845, z: 0.27145898}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1161118835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161118832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56073b7a15306a74d9220855626ca303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkColor: {r: 0, g: 0, b: 0, a: 1}
+  speed: 2.5
 --- !u!1 &1203743297
 GameObject:
   m_ObjectHideFlags: 0
@@ -4035,6 +4067,8 @@ MonoBehaviour:
   isRecording: 0
   dbValues: []
   measurementInterval: 0.05
+  enableAutoCalibration: 1
+  calibrationDuration: 6
 --- !u!114 &1257059666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4062,7 +4096,7 @@ MonoBehaviour:
   star_2: {fileID: 553519181}
   star_3: {fileID: 445730710}
   book_item: {fileID: 232856818}
-  bar: {fileID: 379435861}
+  bar: {fileID: 602480463}
   fairy_text: {fileID: 822158477}
   line: {fileID: 2141387844}
   response: {fileID: 72807356}
@@ -5066,12 +5100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -5259,7 +5293,6 @@ GameObject:
   - component: {fileID: 1466061282}
   - component: {fileID: 1466061281}
   - component: {fileID: 1466061280}
-  - component: {fileID: 1466061283}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5341,18 +5374,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1466061283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1466061279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b7edac1780434d4d997a918ec727045, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1473700114
 GameObject:
   m_ObjectHideFlags: 0
@@ -7099,6 +7120,8 @@ MonoBehaviour:
   isRecording: 0
   dbValues: []
   measurementInterval: 0.05
+  enableAutoCalibration: 1
+  calibrationDuration: 6
 --- !u!114 &1930142529
 MonoBehaviour:
   m_ObjectHideFlags: 0

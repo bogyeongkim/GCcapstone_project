@@ -15,9 +15,9 @@ public class NPCMoveOnClick : MonoBehaviour
     private GameObject player2;
 
 
-    public float moveSpeed = 5f; // NPC ÀÌµ¿ ¼Óµµ
-    private bool isMoving = false; // NPC ¿òÁ÷ÀÓ »óÅÂ Ã¼Å©
-    private bool isNext = false; // ³¡³µ´ÂÁö Ã¼Å©
+    public float moveSpeed = 5f; // NPC ï¿½Ìµï¿½ ï¿½Óµï¿½
+    private bool isMoving = false; // NPC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+    private bool isNext = false; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 
     private SoundAnalyzer soundAnalyzer;
 
@@ -28,7 +28,7 @@ public class NPCMoveOnClick : MonoBehaviour
     private Vector3 targetPosition3;
     private Vector3 setPosition;
 
-    //ÅØ½ºÆ® ¹× ÀÌ¹ÌÁö ¿ÀºêÁ§Æ®
+    //ï¿½Ø½ï¿½Æ® ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public GameObject next_NPC;
     public GameObject microphone_icon;
     public GameObject fairy;
@@ -68,15 +68,15 @@ public class NPCMoveOnClick : MonoBehaviour
     void Start()
     {
         FindPlayerObject();
-        // SoundAnalyzer ÄÄÆ÷³ÍÆ® Ã£±â
+        // SoundAnalyzer ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½ï¿½
         soundAnalyzer = FindObjectOfType<SoundAnalyzer>();
         if (soundAnalyzer != null)
         {
-            soundAnalyzer.enabled = true; // ÄÄÆ÷³ÍÆ®¸¦ È°¼ºÈ­
+            soundAnalyzer.enabled = true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È°ï¿½ï¿½È­
         }
         if (soundAnalyzer == null)
         {
-            UnityEngine.Debug.LogError("SoundAnalyzer ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            UnityEngine.Debug.LogError("SoundAnalyzer ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
         //fairy_text.GetComponent<TextMeshProUGUI>().enabled = true;
         if (gameObject.name == "NPC_01")
@@ -87,7 +87,7 @@ public class NPCMoveOnClick : MonoBehaviour
 
     void FindPlayerObject()
     {
-        // "Player" ÀÌ¸§ÀÇ ¿ÀºêÁ§Æ®¸¦ ¸ÕÀú Ã£°í, ¾ø´Ù¸é "Player2" ÀÌ¸§ÀÇ ¿ÀºêÁ§Æ®¸¦ Ã£À½
+        // "Player" ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½, ï¿½ï¿½ï¿½Ù¸ï¿½ "Player2" ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½
         GameObject playerObject = GameObject.Find("Player(Clone)") ?? GameObject.Find("Player2(Clone)");
 
         if (playerObject != null)
@@ -95,7 +95,7 @@ public class NPCMoveOnClick : MonoBehaviour
             player2 = playerObject;
             player = playerObject.transform;
 
-            // ¸¸¾à "Player" ¿ÀºêÁ§Æ®¸¦ Ã£¾Ò´Ù¸é, ÇÏÀ§ÀÇ "student" ¿ÀºêÁ§Æ®¸¦ Ã£°í Animator¸¦ °¡Á®¿È
+            // ï¿½ï¿½ï¿½ï¿½ "Player" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½Ò´Ù¸ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ "student" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ Animatorï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (playerObject.name == "Player(Clone)")
             {
                 Transform studentTransform = player.Find("CollegeStudent");
@@ -108,7 +108,7 @@ public class NPCMoveOnClick : MonoBehaviour
                     UnityEngine.Debug.LogError("Student object not found in the Player.");
                 }
             }
-            else // "Player2" ¿ÀºêÁ§Æ®ÀÎ °æ¿ì, ÇØ´ç ¿ÀºêÁ§Æ®ÀÇ Animator¸¦ °¡Á®¿È
+            else // "Player2" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Animatorï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             {
                 playerAnimator = playerObject.GetComponent<Animator>();
             }
@@ -139,7 +139,7 @@ public class NPCMoveOnClick : MonoBehaviour
         }
     }
 
-    // NPC Å¬¸¯½Ã È£ÃâµÇ´Â ¸Ş¼Òµå
+    // NPC Å¬ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ş¼Òµï¿½
     private void OnMouseDown()
     {
         if (A_click.a_click_bool) 
@@ -153,7 +153,7 @@ public class NPCMoveOnClick : MonoBehaviour
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î À§Ä¡ ±ÙÃ³·Î NPC ÀÌµ¿
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½Ã³ï¿½ï¿½ NPC ï¿½Ìµï¿½
     void MoveToPlayer()
     {
         /////////////////////////////////////////////////////////////
@@ -163,7 +163,7 @@ public class NPCMoveOnClick : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
         bgi.transform.position = Vector3.MoveTowards(bgi.transform.position, targetPosition4, step);
 
-        // ÇÃ·¹ÀÌ¾î run
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ run
         playerAnimator.SetBool("isRun",true);
 
         if (Vector3.Distance(transform.position, targetPosition) < 2.5f)
@@ -171,20 +171,17 @@ public class NPCMoveOnClick : MonoBehaviour
             isMoving = false;
             UnityEngine.Debug.Log("isRun???");
             playerAnimator.SetBool("isRun", false);
-            // ÀÌµ¿ ³¡³ª¸é ´ëÈ­ ½ÃÀÛ
+            // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½
             TriggerDialogue();
         }
     }
 
     void TriggerDialogue()
     {
-        // "~Ã¥ ¾îµğÀÖ¾î¿ä?" È­¸é¿¡ ÅØ½ºÆ® ¶ç¿ì±â
         line.GetComponent<TextMeshProUGUI>().enabled = true;
         microphone_icon.GetComponent<Renderer>().enabled = true;
-        // ¸¶ÀÌÅ© ÀÔ·Â ¹Ş°í µ¥½Ãº§ °ª ¹Ş¾Æ¿À±â
         UnityEngine.Debug.Log("trigger");
-        soundAnalyzer.StartRecording();
-        StartCoroutine(WaitAndReceiveDbValues()); // ÄÚ·çÆ¾ ½ÃÀÛ
+        StartCoroutine(WaitAndReceiveDbValues());
     }
 
     IEnumerator WaitAndReceiveDbValues()
@@ -193,72 +190,60 @@ public class NPCMoveOnClick : MonoBehaviour
         float sumDb = 0f;
         int countDb = 0;
 
-        yield return new WaitForSeconds(5); // 5ÃÊ ±â´Ù¸²
+        // 1) í•­ìƒ ìƒˆë¡œìš´ ë…¹ìŒ ì‹œì‘
+        soundAnalyzer.StartRecording();
 
-        if (!soundAnalyzer.isRecording) // ³ìÀ½ ³¡³µ´ÂÁö È®ÀÎ
+        // 2) SoundAnalyzerì—ì„œ 5ì´ˆê°€ ì§€ë‚˜ë©´ isRecordingì„ falseë¡œ ë°”ê¿ˆ
+        //    ê·¸ ë•Œê¹Œì§€ ê³„ì† ê¸°ë‹¤ë¦¬ê¸°
+        yield return new WaitUntil(() => !soundAnalyzer.isRecording);
+
+        // 3) ì—¬ê¸° ë„ë‹¬í–ˆë‹¤ëŠ” ê±´ "ì´ë²ˆ 5ì´ˆ ë…¹ìŒì´ ëë‚¬ë‹¤"ëŠ” ëœ»
+        line.GetComponent<TextMeshProUGUI>().enabled = false;
+        microphone_icon.GetComponent<Renderer>().enabled = false;
+
+        DBL = soundAnalyzer.GetDbValues();
+        UnityEngine.Debug.Log("getdb");
+
+        foreach (float dbValue in DBL)
         {
-            line.GetComponent<TextMeshProUGUI>().enabled = false;
-            microphone_icon.GetComponent<Renderer>().enabled = false;
-            
-            DBL = soundAnalyzer.GetDbValues();
-            UnityEngine.Debug.Log("getdb");
-
-            /* µ¥½Ãº§ °ª¿¡ µû¸¥ Ã³¸® ÇÊ¿ä
-             * ¸ñ¼Ò¸® Å¬ ¶§() : µµ¼­°ü¿¡¼­´Â Á¶¿ëÈ÷ ¸»ÇØ¾ßÇØ. & ´äº¯ & ´ÙÀ½ ´Ü°è
-             * ¸ñ¼Ò¸® ÀÛÀ» ¶§() : Àß ¾È µé·Á. ´Ù½Ã ¸»ÇØÁÙ·¡? & Àç½Ãµµ
-             * ¸ñ¼Ò¸® ÀûÀıÇÒ ¶§() : ´äº¯ & ´ÙÀ½ ´Ü°è
-             */
-            foreach (float dbValue in DBL)
+            if (dbValue > 37)
             {
-                if (dbValue > 40) // 40º¸´Ù Å« °ªÀÌ ÀÖ´Â °æ¿ì
-                {
-                    TriggerEvent_loud(); // ÀÌº¥Æ®¸¦ ¹ß»ı½ÃÅ´
-                    isLoud = true;
-                    break; // ÇÏ³ª¶óµµ Á¶°ÇÀ» ¸¸Á·ÇÏ´Â °æ¿ì Ãß°¡ °Ë»ç ¾øÀÌ loop Á¾·á
-                }
-                else if (dbValue > 0)
-                {
-                    sumDb += dbValue;
-                    countDb++;
-                }
+                UnityEngine.Debug.Log("Loud detected: " + dbValue + " dB");
+                TriggerEvent_loud();
+                isLoud = true;
+                break;
             }
-            
-            if (countDb == 0) 
+            else if (dbValue > 3)
             {
-                countDb = 1;
-            }
-
-            if (!isLoud) // 40¸¦ ÃÊ°úÇÏ´Â °ªÀÌ ¾ø´Â °æ¿ì
-            {
-                float averageDb = sumDb / countDb; // Æò±Õ µ¥½Ãº§ °ª °è»ê
-                if (averageDb < 10) // Æò±Õ µ¥½Ãº§ °ªÀÌ 10º¸´Ù ÀÛÀº °æ¿ì
-                {
-                    TriggerEvent_TooSoft();
-                }
-                else // µ¥½Ãº§ °ªÀÌ ÀûÀıÇÑ °æ¿ì
-                {
-                    ScoreManager.instance.AddScore2(1,1);
-                    int stagescore = ScoreManager.instance.GetStageScore(1);
-                    if (stagescore == 1) 
-                    {
-                        star1.SetActive(true);
-                    }
-                    else if (stagescore == 2)
-                    {
-                        star2.SetActive(true);
-                    }
-                    else
-                    {
-                        star3.SetActive(true);
-                    }
-                    TriggerEvent_good();
-                }
+                sumDb += dbValue;
+                countDb++;
             }
         }
-        else
+
+        if (countDb == 0)
+            countDb = 1;
+
+        if (!isLoud)
         {
-            // ³ìÀ½ ÁøÇàÁß -> ³ìÀ½ Á¾·á
-            UnityEngine.Debug.Log("Recording is still in progress.");
+            float averageDb = sumDb / countDb;
+            UnityEngine.Debug.Log("Average dB: " + averageDb + " dB");
+
+            if (averageDb < 8)
+            {
+                // TooSoft â†’ ì¡°ìš©í•˜ë‹¤ëŠ” ì•ˆë‚´ í›„, WaitAndTriggerRetry(5ì´ˆ)ì—ì„œ TriggerDialogue ì¬í˜¸ì¶œ
+                TriggerEvent_TooSoft();
+            }
+            else
+            {
+                // ì ì ˆí•œ ì†Œë¦¬ í¬ê¸° â†’ ì ìˆ˜ / ë³„ ì²˜ë¦¬ ê·¸ëŒ€ë¡œ
+                ScoreManager.instance.AddScore2(1, 1);
+                int stagescore = ScoreManager.instance.GetStageScore(1);
+                if (stagescore == 1) star1.SetActive(true);
+                else if (stagescore == 2) star2.SetActive(true);
+                else star3.SetActive(true);
+
+                TriggerEvent_good();
+            }
         }
     }
 
@@ -267,7 +252,7 @@ public class NPCMoveOnClick : MonoBehaviour
         loud.GetComponent<TextMeshProUGUI>().enabled = true;
         a_loud.Play();
         fairy.GetComponent<Renderer>().enabled = true;
-        StartCoroutine(WaitAndTriggerAppropriate(4.0f));// 3ÃÊ ÈÄ TriggerEvent_Appropriate È£Ãâ
+        StartCoroutine(WaitAndTriggerAppropriate(4.0f));// 3ï¿½ï¿½ ï¿½ï¿½ TriggerEvent_Appropriate È£ï¿½ï¿½
     }
 
     void TriggerEvent_good()
@@ -275,17 +260,17 @@ public class NPCMoveOnClick : MonoBehaviour
         good.GetComponent<TextMeshProUGUI>().enabled = true;
         a_good.Play();
         fairy.GetComponent<Renderer>().enabled = true;
-        StartCoroutine(WaitAndTriggerAppropriate(4.0f));// 3ÃÊ ÈÄ TriggerEvent_Appropriate È£Ãâ
+        StartCoroutine(WaitAndTriggerAppropriate(4.0f));// 3ï¿½ï¿½ ï¿½ï¿½ TriggerEvent_Appropriate È£ï¿½ï¿½
     }
 
     IEnumerator WaitAndTriggerAppropriate(float waitTime)
     {
-        yield return new WaitForSeconds(waitTime); // waitTime¸¸Å­ ´ë±â
+        yield return new WaitForSeconds(waitTime); // waitTimeï¿½ï¿½Å­ ï¿½ï¿½ï¿½
         good.GetComponent<TextMeshProUGUI>().enabled = false;
         loud.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy.GetComponent<Renderer>().enabled = false;
         
-        TriggerEvent_Appropriate(); // TriggerEvent_Appropriate È£Ãâ
+        TriggerEvent_Appropriate(); // TriggerEvent_Appropriate È£ï¿½ï¿½
     }
 
     void TriggerEvent_TooSoft()
@@ -298,7 +283,7 @@ public class NPCMoveOnClick : MonoBehaviour
 
     IEnumerator WaitAndTriggerRetry(float waitTime)
     {
-        yield return new WaitForSeconds(waitTime); // waitTime¸¸Å­ ´ë±â
+        yield return new WaitForSeconds(waitTime); // waitTimeï¿½ï¿½Å­ ï¿½ï¿½ï¿½
         quiet.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy.GetComponent<Renderer>().enabled = false;
         TriggerDialogue();
@@ -310,13 +295,13 @@ public class NPCMoveOnClick : MonoBehaviour
         a_response.Play();
         
         int stagescore = ScoreManager.instance.GetStageScore(1);
-        UnityEngine.Debug.Log("ÇöÀç Á¡¼ö : " + stagescore);
+        UnityEngine.Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : " + stagescore);
         StartCoroutine(WaitAndTriggerNext(4.0f));
     }
 
     IEnumerator WaitAndTriggerNext(float waitTime)
     {
-        yield return new WaitForSeconds(waitTime); // waitTime¸¸Å­ ´ë±â
+        yield return new WaitForSeconds(waitTime); // waitTimeï¿½ï¿½Å­ ï¿½ï¿½ï¿½
         response.GetComponent<TextMeshProUGUI>().enabled = false;
         //next_NPC.SetActive(true);
         targetPosition1 = new Vector3(transform.position.x - 8.0f, transform.position.y, transform.position.z);
@@ -333,10 +318,10 @@ public class NPCMoveOnClick : MonoBehaviour
         next_NPC.transform.position = Vector3.MoveTowards(next_NPC.transform.position, targetPosition2, step);
         bgi.transform.position = Vector3.MoveTowards(bgi.transform.position, targetPosition3, step);
 
-        // ÇÃ·¹ÀÌ¾î run
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ run
         playerAnimator.SetBool("isRun", true);
 
-        // NPC ÀÌµ¿ È®ÀÎ
+        // NPC ï¿½Ìµï¿½ È®ï¿½ï¿½
         if (Vector3.Distance(transform.position, targetPosition1) < 0.01f)
         {
             isNext = false;
@@ -352,7 +337,7 @@ public class NPCMoveOnClick : MonoBehaviour
             {
                 //fairy.GetComponent<Renderer>().enabled = true;
                 int stagescore = ScoreManager.instance.GetStageScore(1);
-                UnityEngine.Debug.Log("½ºÅ×ÀÌÁö1 ÃÑ Á¡¼ö : "+ stagescore);
+                UnityEngine.Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : "+ stagescore);
                 player2.SetActive(false);
                 background.GetComponent<Renderer>().enabled = true;
                 book_item.GetComponent<Renderer>().enabled = true;
@@ -362,7 +347,7 @@ public class NPCMoveOnClick : MonoBehaviour
 
                 SoundBar.GetComponent<TextMeshProUGUI>().enabled = false;
                 value.GetComponent<TextMeshProUGUI>().enabled = false;
-                bar.GetComponent<Renderer>().enabled = false;
+                bar.GetComponent < Image >().enabled = false;
 
 
                 if (stagescore == 1)

@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+//using System.Collections;
+//using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Retry : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class Retry : MonoBehaviour
     public TextMeshProUGUI fairy1;
     public TextMeshProUGUI retry;
     public TextMeshProUGUI cafe_board;
+    public GameObject bar;
+    public TextMeshProUGUI Sound;
+    public TextMeshProUGUI value;
 
     // Start is called before the first frame update
     void Start()
@@ -33,5 +37,8 @@ public class Retry : MonoBehaviour
         retry.GetComponent<TextMeshProUGUI>().enabled = false;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = true;
         gameObject.SetActive(false);
+        Sound.GetComponent<TextMeshProUGUI>().enabled = true;
+        value.GetComponent<TextMeshProUGUI>().enabled = true;
+        bar.GetComponent<Image>().enabled = true;
     }
 }

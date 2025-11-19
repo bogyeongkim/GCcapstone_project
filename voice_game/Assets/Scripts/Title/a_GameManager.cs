@@ -18,11 +18,11 @@ public class a_GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // ¾ÀÀÌ ¹Ù²î¾îµµ °ÔÀÓ ¿ÀºêÁ§Æ®°¡ ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+            DontDestroyOnLoad(gameObject); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½îµµ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
-            Destroy(gameObject); // Áßº¹µÈ ÀÎ½ºÅÏ½º°¡ ÀÖ´Ù¸é ÆÄ±«
+            Destroy(gameObject); // ï¿½ßºï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½Ä±ï¿½
         }
     }
 
@@ -49,11 +49,11 @@ public class a_GameManager : MonoBehaviour
 
     void ExitGame()
     {
-        // ¿¡µðÅÍ¿¡¼­ ½ÇÇà ÁßÀÏ °æ¿ì
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
         #else
-        // ½ÇÁ¦ ºôµå¿¡¼­´Â ¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀ» Á¾·áÇÕ´Ï´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å¿¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         Application.Quit();
         #endif
     }
@@ -63,11 +63,12 @@ public class a_GameManager : MonoBehaviour
         Time.timeScale = 1f;
         exitButton.gameObject.SetActive(false);
         resumeButton.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
         pauseButton.gameObject.SetActive(true);
     }
 
     void RestartGame()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Title");
     }
 }

@@ -22,6 +22,10 @@ public class Go_Next : MonoBehaviour
         }
         else if (currentSceneName == "intro")
         {
+            nextscene = "Map";
+        }
+        else if (currentSceneName == "Map")
+        {
             nextscene = "info_stage1";
         }
         else if (currentSceneName == "info_stage1")
