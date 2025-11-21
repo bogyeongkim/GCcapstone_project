@@ -8,11 +8,11 @@ using TMPro;
 
 public class DbVisualizer : MonoBehaviour
 {
-    public Transform dbBar; // ¸·´ë±âÀÇ Transform
-    public float maxDbValue = 80f; // µ¥½Ãº§ÀÇ ÃÖ´ë°ª (Á¶Á¤ °¡´É)
-    public float minHeight = 0.1f; // ¸·´ë±âÀÇ ÃÖ¼Ò ³ôÀÌ
-    public float scaleMultiplier = 0.1f; // ½ºÄÉÀÏ ¹èÀ²
-    public UnityEngine.UI.Image barImage; // ¸·´ë±âÀÇ Image ÄÄÆ÷³ÍÆ®
+    public Transform dbBar; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Transform
+    public float maxDbValue = 80f; // ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ ï¿½Ö´ë°ª (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+    public float minHeight = 0.1f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float scaleMultiplier = 0.1f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public UnityEngine.UI.Image barImage; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Image ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     string currentSceneName;
     public TextMeshProUGUI uiText;
 
@@ -28,7 +28,7 @@ public class DbVisualizer : MonoBehaviour
         float targetScaleY = normalizedValue * scaleMultiplier;
         float smoothScaleY = Mathf.Lerp(dbBar.localScale.y, targetScaleY, 0.05f);
 
-        // ¸·´ë±â ±æÀÌ Á¶Á¤
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         dbBar.localScale = new Vector3(1, smoothScaleY, 1);
 
         uiText.text = Mathf.FloorToInt(dbValue).ToString();
@@ -40,30 +40,30 @@ public class DbVisualizer : MonoBehaviour
             if (dbValue < 30)
                 newColor = new Color32(188, 229, 92, 255);
             else if (dbValue < 40)
-                newColor = new Color32(250, 237, 125, 255); //³ë¶û
+                newColor = new Color32(250, 237, 125, 255); //ï¿½ï¿½ï¿½
             else
                 newColor = new Color32(222, 79, 79, 255);
         }
         else if (currentSceneName == "stage2")
         {
-            if (dbValue < 30)
-                newColor = new Color32(189,189,189, 255); //È¸»ö
+            if (dbValue < 20)
+                newColor = new Color32(189,189,189, 255); //È¸ï¿½ï¿½
             else if (dbValue < 50)
-                newColor = new Color32(188, 229, 92, 255); //¿¬µÎ
-            else if (dbValue < 55)
+                newColor = new Color32(188, 229, 92, 255); //ï¿½ï¿½ï¿½ï¿½
+            else if (dbValue < 65)
                 newColor = new Color32(250, 237, 125, 255);
             else
                 newColor = new Color32(222, 79, 79, 255);
         }
         else
         {
-            newColor = new Color32(188, 229, 92, 255); //¿¬µÎ
+            newColor = new Color32(188, 229, 92, 255); //ï¿½ï¿½ï¿½ï¿½
         }
 
 
 
 
-        // ¸·´ë±â »ö»ó Àû¿ë
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (barImage != null)
         {
             barImage.color = newColor;

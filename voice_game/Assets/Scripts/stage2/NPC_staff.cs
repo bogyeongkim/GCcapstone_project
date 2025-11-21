@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+//using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,7 +12,7 @@ public class NPC_staff : MonoBehaviour
 
     List<float> DBL = new List<float>();
 
-    private int turn = 0; // µÎ¹øÀÇ ¸»ÇÏ±â
+    private int turn = 0; // ï¿½Î¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
 
     private bool isSoft1 = false;
     private bool isSoft2 = false;
@@ -20,7 +20,7 @@ public class NPC_staff : MonoBehaviour
     private int drink_num = 0;
 
 
-    //¿ÀºêÁ§Æ®
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public GameObject staff_bubble1;
     public GameObject staff_bubble2;
     public GameObject player_bubble;
@@ -43,21 +43,21 @@ public class NPC_staff : MonoBehaviour
 
     public GameObject bar;
 
-    public GameObject[] drinkObjects; // À½·á ¿ÀºêÁ§Æ® ¹è¿­
+    public GameObject[] drinkObjects; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½è¿­
     public GameObject[] drinks;
     public TextMeshProUGUI[] drinks_t;
 
-    //ÅØ½ºÆ®
-    public TextMeshProUGUI staff_line1; // ÁÖ¹®
-    public TextMeshProUGUI staff_line2; // ÇÖ ¾ÆÀÌ½º
-    public TextMeshProUGUI staff_line3; // Àá½Ã¸¸ ±â´Ù·ÁÁÖ¼¼¿ä
-    public TextMeshProUGUI staff_line4; // ½Ã²ô·¯¿ö¿ä
-    public TextMeshProUGUI line1; // ÃÊÄÚ¿ìÀ¯
-    public TextMeshProUGUI line2; // µû¶æÇÑ °É·Î
+    //ï¿½Ø½ï¿½Æ®
+    public TextMeshProUGUI staff_line1; // ï¿½Ö¹ï¿½
+    public TextMeshProUGUI staff_line2; // ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½
+    public TextMeshProUGUI staff_line3; // ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½Ù·ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½
+    public TextMeshProUGUI staff_line4; // ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public TextMeshProUGUI line1; // ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½
+    public TextMeshProUGUI line2; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½
     public TextMeshProUGUI fairy1;
     public TextMeshProUGUI fairy2;
     public TextMeshProUGUI fairy3;
-    public TextMeshProUGUI wait; // ±â´Ù¸®´Â Áß
+    public TextMeshProUGUI wait; // ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½
     public TextMeshProUGUI customer_line;
     public TextMeshProUGUI cafe_board;
     public TextMeshProUGUI retry;
@@ -66,7 +66,7 @@ public class NPC_staff : MonoBehaviour
     public TextMeshProUGUI Sound;
     public TextMeshProUGUI value;
 
-    //¿Àµð¿À
+    //ï¿½ï¿½ï¿½ï¿½ï¿½
     public AudioSource staff_audio1; 
     public AudioSource staff_audio2;
     public AudioSource staff_audio3;
@@ -88,15 +88,15 @@ public class NPC_staff : MonoBehaviour
     void Start()
     {
 
-        // SoundAnalyzer ÄÄÆ÷³ÍÆ® Ã£±â
+        // SoundAnalyzer ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ã£ï¿½ï¿½
         soundAnalyzer = FindObjectOfType<SoundAnalyzer2>();
         if (soundAnalyzer != null)
         {
-            soundAnalyzer.enabled = true; // ÄÄÆ÷³ÍÆ®¸¦ È°¼ºÈ­
+            soundAnalyzer.enabled = true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È°ï¿½ï¿½È­
         }
         if (soundAnalyzer == null)
         {
-            UnityEngine.Debug.LogError("SoundAnalyzer ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            UnityEngine.Debug.LogError("SoundAnalyzer ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
 
         
@@ -109,33 +109,33 @@ public class NPC_staff : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // ¾î¼­¿À¼¼¿ä ÁÖ¹®ÇÏ½Ã°Ú¾î¿ä? ¼Ò¸®&¸»Ç³¼± Ãâ·Â
+        // ï¿½î¼­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½Ï½Ã°Ú¾ï¿½ï¿½? ï¿½Ò¸ï¿½&ï¿½ï¿½Ç³ï¿½ï¿½ ï¿½ï¿½ï¿½
         arrow.GetComponent<Renderer>().enabled = false;
-        staff_bubble1.GetComponent<Renderer>().enabled = true; // ¸»Ç³¼±
+        staff_bubble1.GetComponent<Renderer>().enabled = true; // ï¿½ï¿½Ç³ï¿½ï¿½
         if (turn == 0)
-            staff_line1.GetComponent<TextMeshProUGUI>().enabled = true; //ÅØ½ºÆ®
+            staff_line1.GetComponent<TextMeshProUGUI>().enabled = true; //ï¿½Ø½ï¿½Æ®
         else
             staff_line2.GetComponent<TextMeshProUGUI>().enabled = true;
         if (turn == 0) 
             staff_audio1.Play(); 
         else
             staff_audio2.Play();
-        StartCoroutine(StartRecordingAfterAudioEnds(staff_audio1.clip.length + 1.0f));//¿Àµð¿À ³¡³¯¶§±îÁö
+        StartCoroutine(StartRecordingAfterAudioEnds(staff_audio1.clip.length + 1.0f));//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
     private System.Collections.IEnumerator StartRecordingAfterAudioEnds(float waitTime)
     {
-        yield return new WaitForSeconds(waitTime); // ¿Àµð¿À°¡ ³¡³¯ ¶§±îÁö ±â´Ù¸²
+        yield return new WaitForSeconds(waitTime); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½
         if (soundAnalyzer != null)
         {
-            player_bubble.GetComponent<Renderer>().enabled = true; // ¸»Ç³¼±
+            player_bubble.GetComponent<Renderer>().enabled = true; // ï¿½ï¿½Ç³ï¿½ï¿½
             if (turn == 0)
-                line1.GetComponent<TextMeshProUGUI>().enabled = true; //ÅØ½ºÆ®
+                line1.GetComponent<TextMeshProUGUI>().enabled = true; //ï¿½Ø½ï¿½Æ®
             else
                 line2.GetComponent<TextMeshProUGUI>().enabled = true;
             microphone.GetComponent<Renderer>().enabled = true;
-            soundAnalyzer.StartRecording(); // ¸¶ÀÌÅ© ÀÔ·Â ½ÃÀÛ
-            StartCoroutine(WaitAndReceiveDbValues()); // ÄÚ·çÆ¾ ½ÃÀÛ
+            soundAnalyzer.StartRecording(); // ï¿½ï¿½ï¿½ï¿½Å© ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
+            StartCoroutine(WaitAndReceiveDbValues()); // ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
         }
     }
 
@@ -146,18 +146,18 @@ public class NPC_staff : MonoBehaviour
         float sumDb = 0f;
         int countDb = 0;
 
-        yield return new WaitForSeconds(5); // 5ÃÊ ±â´Ù¸²
+        yield return new WaitForSeconds(5); // 5ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½
 
-        if (!soundAnalyzer.isRecording) // ³ìÀ½ ³¡³µ´ÂÁö È®ÀÎ
+        if (!soundAnalyzer.isRecording) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         {
             soundAnalyzer.ClearWarning();
 
-            staff_bubble1.GetComponent<Renderer>().enabled = false; // ¸»Ç³¼±
-            staff_line1.GetComponent<TextMeshProUGUI>().enabled = false; //ÅØ½ºÆ®
-            staff_line2.GetComponent<TextMeshProUGUI>().enabled = false; //ÅØ½ºÆ®
-            player_bubble.GetComponent<Renderer>().enabled = false; // ¸»Ç³¼±
-            line1.GetComponent<TextMeshProUGUI>().enabled = false; //ÅØ½ºÆ®
-            line2.GetComponent<TextMeshProUGUI>().enabled = false; //ÅØ½ºÆ®
+            staff_bubble1.GetComponent<Renderer>().enabled = false; // ï¿½ï¿½Ç³ï¿½ï¿½
+            staff_line1.GetComponent<TextMeshProUGUI>().enabled = false; //ï¿½Ø½ï¿½Æ®
+            staff_line2.GetComponent<TextMeshProUGUI>().enabled = false; //ï¿½Ø½ï¿½Æ®
+            player_bubble.GetComponent<Renderer>().enabled = false; // ï¿½ï¿½Ç³ï¿½ï¿½
+            line1.GetComponent<TextMeshProUGUI>().enabled = false; //ï¿½Ø½ï¿½Æ®
+            line2.GetComponent<TextMeshProUGUI>().enabled = false; //ï¿½Ø½ï¿½Æ®
             microphone.GetComponent<Renderer>().enabled = false;
 
             DBL = soundAnalyzer.GetDbValues();
@@ -165,7 +165,7 @@ public class NPC_staff : MonoBehaviour
 
             foreach (float dbValue in DBL)
             {
-                if (dbValue > 10f) // 0ÀÌ ¾Æ´Ñ °ªÀÎ °æ¿ì¿¡¸¸ Ã³¸®
+                if (dbValue > 30f) // 0ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ Ã³ï¿½ï¿½
                 {
                     sumDb += dbValue;
                     countDb++;
@@ -175,10 +175,10 @@ public class NPC_staff : MonoBehaviour
             float averageDb = 0f;
             if (countDb > 0)
             {
-                averageDb = sumDb / countDb; // 0ÀÌ ¾Æ´Ñ °ªÀÇ Æò±Õ µ¥½Ãº§ °ª °è»ê
+                averageDb = sumDb / countDb; // 0ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
                 UnityEngine.Debug.Log("average :"+averageDb);
             }
-            if (averageDb < 35) 
+            if (averageDb < 45) 
             {
                 if (turn == 1)
                 {
@@ -192,11 +192,11 @@ public class NPC_staff : MonoBehaviour
                 }
                 
             }
-            else if (averageDb > 45) 
+            else if (averageDb > 60) 
             {
-                TriggerEvent_loud(); // turn »ó°ü¾øÀÌ
+                TriggerEvent_loud(); // turn ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             }
-            else // µ¥½Ãº§ °ªÀÌ ÀûÀýÇÑ °æ¿ì
+            else // ï¿½ï¿½ï¿½Ãºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             {
                 if (turn == 1)
                 {
@@ -210,16 +210,16 @@ public class NPC_staff : MonoBehaviour
         }
         else
         {
-            // ³ìÀ½ ÁøÇàÁß -> ³ìÀ½ Á¾·á
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             UnityEngine.Debug.Log("Recording is still in progress.");
         }
     }
 
     void TriggerEvent_Wait()
     {
-        staff_line3.GetComponent<TextMeshProUGUI>().enabled = true; // Àá½Ã¸¸ ±â´Ù·ÁÁÖ¼¼¿ä
+        staff_line3.GetComponent<TextMeshProUGUI>().enabled = true; // ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½Ù·ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½
         staff_audio3.Play();
-        staff_bubble1.GetComponent<Renderer>().enabled = true; // ¸»Ç³¼±
+        staff_bubble1.GetComponent<Renderer>().enabled = true; // ï¿½ï¿½Ç³ï¿½ï¿½
         StartCoroutine(WaitAndExecuteFunction(4.0f));
     }
 
@@ -229,34 +229,34 @@ public class NPC_staff : MonoBehaviour
         staff_line3.GetComponent<TextMeshProUGUI>().enabled = false;
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
         value.GetComponent<TextMeshProUGUI>().enabled = false;
-        bar.GetComponent<Renderer>().enabled = false;
+        bar.GetComponent<Image>().enabled = false;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         blank_image.GetComponent<Renderer>().enabled = true;
         wait.GetComponent<TextMeshProUGUI>().enabled = true;
-        //¼¼°³ÀÇ À½·á ¿ÀºêÁ§Æ®°¡ 1ÃÊ¾¿ ¹ø°¥¾Æ ³ªÅ¸³ªµµ·Ï
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ 1ï¿½Ê¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         StartCoroutine(ShowDrinksSequentially());
 
         if (isSoft1 == true && isSoft2 == true) 
         {
-            //Â÷°¡¿î µþ±â
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             drink_num = 0;
             ScoreManager.instance.AddScore2(2,1);
         }
         else if (isSoft1 == true && isSoft2 == false)
         {
-            //µû¶æÇÑ µþ±â
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             drink_num = 1;
             ScoreManager.instance.AddScore2(2,2);
         }
         else if (isSoft1 == false && isSoft2 == true)
         {
-            //Â÷°¡¿î ÃÊÄÚ
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             drink_num = 2;
             ScoreManager.instance.AddScore2(2,2);
         }
         else
         {
-            //µû¶æÇÑ ÃÊÄÚ
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             drink_num = 3;
             ScoreManager.instance.AddScore2(2,3);
         }
@@ -265,33 +265,33 @@ public class NPC_staff : MonoBehaviour
 
     IEnumerator ShowDrinksSequentially()
     {
-        // °¢ À½·á ¿ÀºêÁ§Æ®¸¦ ¼ø¼­´ë·Î È°¼ºÈ­ÇÏ°í 1ÃÊ¾¿ ´ë±âÇÑ ÈÄ ºñÈ°¼ºÈ­
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Ï°ï¿½ 1ï¿½Ê¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
         for (int j = 0; j<3; j++)
         {
             for (int i = 0; i < drinkObjects.Length; i++)
             {
-                drinkObjects[i].SetActive(true); // À½·á ¿ÀºêÁ§Æ® È°¼ºÈ­
-                yield return new WaitForSeconds(1.0f); // 1ÃÊ ´ë±â
-                drinkObjects[i].SetActive(false); // À½·á ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+                drinkObjects[i].SetActive(true); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® È°ï¿½ï¿½È­
+                yield return new WaitForSeconds(1.0f); // 1ï¿½ï¿½ ï¿½ï¿½ï¿½
+                drinkObjects[i].SetActive(false); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­
             }
         }
         blank_image.GetComponent<Renderer>().enabled = false;
         wait.GetComponent<TextMeshProUGUI>().enabled = false;
         Sound.GetComponent<TextMeshProUGUI>().enabled = true;
         value.GetComponent<TextMeshProUGUI>().enabled = true;
-        bar.GetComponent<Renderer>().enabled = true;
+        bar.GetComponent<Image>().enabled = true;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = true;
-        staff_bubble1.GetComponent<Renderer>().enabled = false; // ¸»Ç³¼±
+        staff_bubble1.GetComponent<Renderer>().enabled = false; // ï¿½ï¿½Ç³ï¿½ï¿½
         StartCoroutine(Get_drink(1.0f));
     }
 
-    void TriggerEvent_loud() // ½Ã²ô·¯¿ì´Ï ³ª°¡ÁÖ¼¼¿ê
+    void TriggerEvent_loud() // ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½
     {
-        // ¼Õ´ÔÀÌ¹ÌÁö, ¸»Ç³¼±, ³Ê¹« ½Ã²ô·¯¿ö¿ä!
-        customer.GetComponent<Renderer>().enabled = true; // ¼Õ´Ô ÀÌ¹ÌÁö
+        // ï¿½Õ´ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½, ï¿½ï¿½Ç³ï¿½ï¿½, ï¿½Ê¹ï¿½ ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!
+        customer.GetComponent<Renderer>().enabled = true; // ï¿½Õ´ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
         customer_angry.GetComponent<Renderer>().enabled = true;
-        customer_bubble.GetComponent<Renderer>().enabled = true; // ¸»Ç³¼±
-        customer_line.GetComponent<TextMeshProUGUI>().enabled = true; //ÅØ½ºÆ®
+        customer_bubble.GetComponent<Renderer>().enabled = true; // ï¿½ï¿½Ç³ï¿½ï¿½
+        customer_line.GetComponent<TextMeshProUGUI>().enabled = true; //ï¿½Ø½ï¿½Æ®
         a_customer.Play();
 
         StartCoroutine(Retry_loud1(5.0f));
@@ -300,37 +300,37 @@ public class NPC_staff : MonoBehaviour
     IEnumerator Retry_loud1(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        // ´Ù¸¥ ¼Õ´ÔµéÀÌ ºÒÆíÇØÇÏ´Ï ³ª°¡ÁÖ¼¼¿ä¤Ì¤Ì
-        staff_bubble2.GetComponent<Renderer>().enabled = true; // ¸»Ç³¼±
+        // ï¿½Ù¸ï¿½ ï¿½Õ´Ôµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½Ì¤ï¿½
+        staff_bubble2.GetComponent<Renderer>().enabled = true; // ï¿½ï¿½Ç³ï¿½ï¿½
         staff_audio4.Play();
         staff_smile.GetComponent<Renderer>().enabled = false;
         staff_sad.GetComponent<Renderer>().enabled = true;
-        staff_line4.GetComponent<TextMeshProUGUI>().enabled = true; //ÅØ½ºÆ®
+        staff_line4.GetComponent<TextMeshProUGUI>().enabled = true; //ï¿½Ø½ï¿½Æ®
 
         StartCoroutine(Retry_loud2(5.0f));
     }
     IEnumerator Retry_loud2(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        // ¸ñ¼Ò¸®°¡ ³Ê¹« ÄÇ³ªºÁ.. ´Ù½Ã ÁÖ¹®ÇØº¸ÀÚ~
+        // ï¿½ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½Ê¹ï¿½ ï¿½Ç³ï¿½ï¿½ï¿½.. ï¿½Ù½ï¿½ ï¿½Ö¹ï¿½ï¿½Øºï¿½ï¿½ï¿½~
         fairy.GetComponent<Renderer>().enabled = true;
         blank.GetComponent<Renderer>().enabled = true;
         blank_image.GetComponent<Renderer>().enabled = true;
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
         value.GetComponent<TextMeshProUGUI>().enabled = false;
-        bar.GetComponent<Renderer>().enabled = false;
+        bar.GetComponent<Image>().enabled = false;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy1.GetComponent<TextMeshProUGUI>().enabled = true;
         a_fairy1.Play();
         retry_button.SetActive(true);
         retry.GetComponent<TextMeshProUGUI>().enabled = true;
 
-        customer.GetComponent<Renderer>().enabled = false; // ¼Õ´Ô ÀÌ¹ÌÁö
+        customer.GetComponent<Renderer>().enabled = false; // ï¿½Õ´ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
         customer_angry.GetComponent<Renderer>().enabled = false;
-        customer_bubble.GetComponent<Renderer>().enabled = false; // ¸»Ç³¼±
-        customer_line.GetComponent<TextMeshProUGUI>().enabled = false; //ÅØ½ºÆ®
-        staff_bubble2.GetComponent<Renderer>().enabled = false; // ¸»Ç³¼±
-        staff_line4.GetComponent<TextMeshProUGUI>().enabled = false; //ÅØ½ºÆ®
+        customer_bubble.GetComponent<Renderer>().enabled = false; // ï¿½ï¿½Ç³ï¿½ï¿½
+        customer_line.GetComponent<TextMeshProUGUI>().enabled = false; //ï¿½Ø½ï¿½Æ®
+        staff_bubble2.GetComponent<Renderer>().enabled = false; // ï¿½ï¿½Ç³ï¿½ï¿½
+        staff_line4.GetComponent<TextMeshProUGUI>().enabled = false; //ï¿½Ø½ï¿½Æ®
         staff_smile.GetComponent<Renderer>().enabled = true;
         staff_sad.GetComponent<Renderer>().enabled = false;
         arrow.GetComponent<Renderer>().enabled = true;
@@ -344,17 +344,17 @@ public class NPC_staff : MonoBehaviour
     IEnumerator Get_drink(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        // À½·á ³ª¿È
-        drinks[drink_num].SetActive(true); // À½·á ÀÌ¹ÌÁö
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        drinks[drink_num].SetActive(true); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
         drinks[drink_num].transform.position = new Vector3(-3.32f,-1.86f,-0.7f);
         ScoreManager.instance.AddItem(drinks[drink_num]);
-        drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = true; // ´ë»ç
+        drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = true; // ï¿½ï¿½ï¿½
         staff_audio_d[drink_num].Play();
-        staff_bubble1.GetComponent<Renderer>().enabled = true; // ¸»Ç³¼±
+        staff_bubble1.GetComponent<Renderer>().enabled = true; // ï¿½ï¿½Ç³ï¿½ï¿½
         
         if (drink_num == 3)
         {
-            StartCoroutine(TriggerEvent_good(5.0f)); // ÀûÀý
+            StartCoroutine(TriggerEvent_good(5.0f)); // ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
@@ -362,22 +362,22 @@ public class NPC_staff : MonoBehaviour
         }
     }
 
-    IEnumerator TriggerEvent_good(float waitTime) // ÀûÀýÇÑ À½·á ³ª¿È
+    IEnumerator TriggerEvent_good(float waitTime) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         yield return new WaitForSeconds(waitTime);
-        drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = false; // ´ë»ç
+        drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = false; // ï¿½ï¿½ï¿½
         a_fairy2.Play();
         fairy.GetComponent<Renderer>().enabled = true;
         blank.GetComponent<Renderer>().enabled = true;
-        blank_image.GetComponent<Renderer>().enabled = true; //¹«Áö¹è°æ ±òÁö¸»Áö °í¹Î
+        blank_image.GetComponent<Renderer>().enabled = true; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
         value.GetComponent<TextMeshProUGUI>().enabled = false;
-        bar.GetComponent<Renderer>().enabled = false;
+        bar.GetComponent<Image>().enabled = false;
         cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
         fairy2.GetComponent<TextMeshProUGUI>().enabled = true;
 
         int stagescore = ScoreManager.instance.GetStageScore(2);
-        UnityEngine.Debug.Log("½ºÅ×ÀÌÁö2 Á¡¼ö : " + stagescore);
+        UnityEngine.Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2 ï¿½ï¿½ï¿½ï¿½ : " + stagescore);
 
         drinks[drink_num].transform.position = new Vector3(0f, -3f, -3f);
 
@@ -389,10 +389,10 @@ public class NPC_staff : MonoBehaviour
         next_button.SetActive(true);
     }
 
-    IEnumerator TriggerEvent_bad(float waitTime) // ºÎÀûÀýÇÑ À½·á ³ª¿È
+    IEnumerator TriggerEvent_bad(float waitTime) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         yield return new WaitForSeconds(waitTime);
-        drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = false; // ´ë»ç
+        drinks_t[drink_num].GetComponent<TextMeshProUGUI>().enabled = false; // ï¿½ï¿½ï¿½
         staff_bad1.GetComponent<TextMeshProUGUI>().enabled = true;
         a_staff_bad1.Play();
 
@@ -406,24 +406,24 @@ public class NPC_staff : MonoBehaviour
 
         yield return new WaitForSeconds(5.0f);
         staff_bad2.GetComponent<TextMeshProUGUI>().enabled = false;
-        staff_bubble1.GetComponent<Renderer>().enabled = false; // ¸»Ç³¼±
+        staff_bubble1.GetComponent<Renderer>().enabled = false; // ï¿½ï¿½Ç³ï¿½ï¿½
         fairy.GetComponent<Renderer>().enabled = true;
         blank.GetComponent<Renderer>().enabled = true;
-        blank_image.GetComponent<Renderer>().enabled = true; //¹«Áö¹è°æ ±òÁö¸»Áö °í¹Î
+        blank_image.GetComponent<Renderer>().enabled = true; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
         value.GetComponent<TextMeshProUGUI>().enabled = false;
-        bar.GetComponent<Renderer>().enabled = false;
+        bar.GetComponent<Image>().enabled = false;
         fairy3.GetComponent<TextMeshProUGUI>().enabled = true;
         a_fairy3.Play();
 
         int stagescore = ScoreManager.instance.GetStageScore(2);
-        UnityEngine.Debug.Log("½ºÅ×ÀÌÁö2 Á¡¼ö : " + stagescore);
+        UnityEngine.Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2 ï¿½ï¿½ï¿½ï¿½ : " + stagescore);
 
         drinks[drink_num].transform.position = new Vector3(0f, -3f, -3f);
 
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
         value.GetComponent<TextMeshProUGUI>().enabled = false;
-        bar.GetComponent<Renderer>().enabled = false;
+        bar.GetComponent<Image>().enabled = false;
 
         if (stagescore == 1)
         {

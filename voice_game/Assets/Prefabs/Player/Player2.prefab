@@ -61,10 +61,10 @@ Animator:
   m_GameObject: {fileID: 4824676924531819671}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: ed14a450ea349d342ab18c980a660555, type: 2}
+  m_Controller: {fileID: 9100000, guid: 670b80efb872c514eb471962838a2dcc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -79,19 +79,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4824676924531819671}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 511d7a85a1adcf54db349b1446880c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundAnalyzer3: {fileID: 0}
+  soundAnalyzer: {fileID: 0}
+  minJumpPower: 2
   maxJumpPower: 10
   minJumpThreshold: 20
-  groundCheckDistance: 0.2
+  maxDbReference: 70
+  peakCheckDuration: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  isGrounded: 1
+  groundCheckDistance: 0.2
   isCanMove: 1
 --- !u!114 &1819315357551032100
 MonoBehaviour:

@@ -8,17 +8,17 @@ public class Follow : MonoBehaviour
 
     void Start()
     {
-        // ºÎ¸ð ¿ÀºêÁ§Æ®ÀÇ Transform °¡Á®¿À±â
+        // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Transform ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         parentTransform = transform.parent;
     }
 
     void Update()
     {
-        // ºÎ¸ðÀÇ À§Ä¡¸¦ µû¸£µÇ Y°ªÀº -0.7·Î ¼³Á¤
+        // ï¿½Î¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½ï¿½ï¿½ -0.7ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (parentTransform != null)
         {
             Vector3 newPosition = parentTransform.position;
-            newPosition.y -= 2.3f; // Y°ªÀ» -0.7·Î ¼³Á¤
+            newPosition.y -= 2.3f; // Yï¿½ï¿½ï¿½ï¿½ -0.7ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             newPosition.x += 0.3f; 
             transform.position = newPosition;
         }

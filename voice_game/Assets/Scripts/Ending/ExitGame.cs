@@ -1,19 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static System.Net.Mime.MediaTypeNames;
+using UnityEngine.SceneManagement;
 
 public class ExitGame : MonoBehaviour
 {
-    // ÀÌ ÇÔ¼ö´Â ¹öÆ°ÀÌ Å¬¸¯µÉ ¶§ È£ÃâµË´Ï´Ù.
+    // ---------------------
+    // 1) ê²Œì„ ì¢…ë£Œ
+    // ---------------------
     public void QuitGame()
     {
-        // ¿¡µğÅÍ¿¡¼­ ½ÇÇà ÁßÀÏ °æ¿ì
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
-        // ½ÇÁ¦ ºôµå¿¡¼­´Â ¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀ» Á¾·áÇÕ´Ï´Ù.
-        Application.Quit();
-        #endif
+#else
+        UnityEngine.Application.Quit();
+#endif
+    }
+
+    // ---------------------
+    // 2) ê²Œì„ ì¼ì‹œ ì •ì§€
+    // ---------------------
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;        // ê²Œì„ ì‹œê°„ ì •ì§€
+        Debug.Log("Game Paused");
+    }
+
+    // ---------------------
+    // 3) ê²Œì„ ì¬ê°œ
+    // ---------------------
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        Debug.Log("Game Resumed");
+    }
+
+    // ---------------------
+    // 4) ê²Œì„ ì™„ì „íˆ ì²˜ìŒë¶€í„° ë‹¤ì‹œ ì‹œì‘
+    // ---------------------
+    public void RestartGame()
+    {
+        // TimeScaleì´ 0 ìƒíƒœ(ì¼ì‹œì •ì§€)ì¼ ìˆ˜ ìˆìœ¼ë¯€ë¡œ ì›ë˜ëŒ€ë¡œ ë˜ëŒë¦¼
+        Time.timeScale = 1f;
+
+        // í˜„ì¬ ë¹Œë“œì—ì„œ ì²« ë²ˆì§¸ ì”¬(ê²Œì„ ì‹œì‘ ì”¬)ì„ ë‹¤ì‹œ ë¡œë“œ
+        SceneManager.LoadScene(0);
+
+        Debug.Log("Game Restarted (Scene 0 Reloaded)");
     }
 }

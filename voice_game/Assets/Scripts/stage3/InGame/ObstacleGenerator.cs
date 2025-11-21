@@ -22,7 +22,7 @@ public class ObstacleGenerator : MonoBehaviour
         {
             // 리젠 시간이 될 때마다 높이만 랜덤으로 새로운 장애물 생성
             GameObject newObstacle = PoolManager.Instance.GetPool(0);
-            newObstacle.transform.position = spawnPosition + new Vector3(0,Random.Range(-1.16f, 1.25f),0);
+            newObstacle.transform.position = spawnPosition + new Vector3(0,Random.Range(-1.65f, 2.0f),0);
 
             yield return new WaitForSeconds(reGenTime);
         }
