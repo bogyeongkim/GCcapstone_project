@@ -442,6 +442,7 @@ public class NPC_staff : MonoBehaviour
         Sound.GetComponent<TextMeshProUGUI>().enabled = false;
         value.GetComponent<TextMeshProUGUI>().enabled = false;
         bar.GetComponent<Image>().enabled = false;
+        cafe_board.GetComponent<TextMeshProUGUI>().enabled = false;
 
         if (stagescore == 1)
         {
