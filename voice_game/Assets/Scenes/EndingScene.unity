@@ -5135,8 +5135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56073b7a15306a74d9220855626ca303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blinkColor: {r: 0.7, g: 1, b: 0, a: 1}
-  speed: 5
+  blinkColor: {r: 0, g: 0, b: 0, a: 1}
+  speed: 2.5
 --- !u!1 &1270281797
 GameObject:
   m_ObjectHideFlags: 0
@@ -7428,8 +7428,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56073b7a15306a74d9220855626ca303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blinkColor: {r: 0.7, g: 1, b: 0, a: 1}
-  speed: 5
+  blinkColor: {r: 0, g: 0, b: 0, a: 1}
+  speed: 2.5
 --- !u!1 &1838045251
 GameObject:
   m_ObjectHideFlags: 0

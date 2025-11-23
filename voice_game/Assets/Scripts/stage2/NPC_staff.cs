@@ -83,6 +83,8 @@ public class NPC_staff : MonoBehaviour
 
     public AudioSource a_customer;
 
+    private bool isTalking = false;
+
 
 
     void Start()
@@ -120,7 +122,7 @@ public class NPC_staff : MonoBehaviour
             staff_audio1.Play(); 
         else
             staff_audio2.Play();
-        StartCoroutine(StartRecordingAfterAudioEnds(staff_audio1.clip.length + 1.0f));//����� ����������
+        StartCoroutine(StartRecordingAfterAudioEnds(staff_audio1.clip.length + 1.5f));//����� ����������
     }
 
     private System.Collections.IEnumerator StartRecordingAfterAudioEnds(float waitTime)
@@ -377,7 +379,7 @@ public class NPC_staff : MonoBehaviour
         fairy2.GetComponent<TextMeshProUGUI>().enabled = true;
 
         int stagescore = ScoreManager.instance.GetStageScore(2);
-        UnityEngine.Debug.Log("��������2 ���� : " + stagescore);
+        UnityEngine.Debug.Log("스테이지2 점수 : " + stagescore);
 
         drinks[drink_num].transform.position = new Vector3(0f, -3f, -3f);
 
@@ -385,7 +387,7 @@ public class NPC_staff : MonoBehaviour
         star2.SetActive(true);
         star3.SetActive(true);
 
-        yield return new WaitForSeconds(a_fairy3.clip.length + 2.0f);
+        yield return new WaitForSeconds(a_fairy2.clip.length + 2.0f);
         next_button.SetActive(true);
     }
 
