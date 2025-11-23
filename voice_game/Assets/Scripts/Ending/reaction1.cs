@@ -12,6 +12,7 @@ public class reaction1 : MonoBehaviour
     public GameObject blank_image;
     public GameObject mainmenu_button;
     public GameObject quit_button;
+    public GameObject report_button;
     public GameObject bubble;
 
     public TextMeshProUGUI dragon_line1;
@@ -31,9 +32,14 @@ public class reaction1 : MonoBehaviour
 
     public Animator dragonAnimator;
 
+    private Dictionary<int, int> allStageScores;
+
+    public EndingResultUI endingResultUI;
+
     // Start is called before the first frame update
     void Start()
     {
+        allStageScores = ScoreManager.instance.GetAllStageScores();
         StartCoroutine(PlayDragonLine());
     }
 
@@ -45,9 +51,9 @@ public class reaction1 : MonoBehaviour
 
         bgm_next.Play();
 
-        // "ÀÌ°Ô ¹¹¾ß? ³» ¸¶À½¿¡ µå´Â °Ô ¾øÀÝ¾Æ!"
-        // "Èì.. ¸¶À½¿¡ ½â µéÁø ¾ÊÁö¸¸ ÇÑ ¹ø ºÁÁÖ°Ú¾î"
-        // "³»°¡ ÁÁ¾ÆÇÏ´Â °ÍµéÀÌÀÝ¾Æ!"
+        // "ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½? ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¾ï¿½!"
+        // "ï¿½ï¿½.. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ö°Ú¾ï¿½"
+        // "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Íµï¿½ï¿½ï¿½ï¿½Ý¾ï¿½!"
         bubble.GetComponent<Renderer>().enabled = true;
         dragon_line1.enabled = true;
         a_dragon_line1.Play();
@@ -65,7 +71,7 @@ public class reaction1 : MonoBehaviour
             yield return new WaitForSeconds(a_feedbacks[0].clip.length + 1.0f);
             feedbacks[0].enabled = false;
 
-            Dictionary<int, int> allStageScores = ScoreManager.instance.GetAllStageScores();
+            //Dictionary<int, int> allStageScores = ScoreManager.instance.GetAllStageScores();
 
             foreach (var stageScore in allStageScores)
             {
@@ -91,9 +97,9 @@ public class reaction1 : MonoBehaviour
             dragon_line1.enabled = false;
         }
 
-        // "³Êµµ ¸ñ¼Ò¸® Á¶ÀýÀ» ¸øÇÏ´Â ³à¼®ÀÌ±¸³ª!"
-        // "°ø°øÀå¼Ò¿¡¼± ¸ñ¼Ò¸® Á¶ÀýÀ» ´õ ÀßÇÏµµ·Ï ÇØ"
-        // "³× ´öºÐ¿¡ ¸¶À½ÀÌ Ç®·È¾î"
+        // "ï¿½Êµï¿½ ï¿½ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½à¼®ï¿½Ì±ï¿½ï¿½ï¿½!"
+        // "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½"
+        // "ï¿½ï¿½ ï¿½ï¿½ï¿½Ð¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç®ï¿½È¾ï¿½"
         dragon_line2.enabled = true;
         a_dragon_line2.Play();
 
@@ -109,8 +115,8 @@ public class reaction1 : MonoBehaviour
 
         if (gameObject.name == "reaction1" || gameObject.name == "reaction3")
         {
-            // "È­ÇØÇÏ±â ½È¾î! µ¹¾Æ°¡!"
-            // "¾ÕÀ¸·Îµµ ¸ñ¼Ò¸® Á¶ÀýÀ» ÀßÇØÁÖ¸é ÁÁ°Ú¾î"
+            // "È­ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½È¾ï¿½! ï¿½ï¿½ï¿½Æ°ï¿½!"
+            // "ï¿½ï¿½ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½"
             
             dragon_line3.enabled = true;
             a_dragon_line3.Play();
@@ -139,10 +145,15 @@ public class reaction1 : MonoBehaviour
         }
         else
         {
-                UnityEngine.Debug.LogError("SortingGroup ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù.");
+                UnityEngine.Debug.LogError("SortingGroup ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
         }
+        
+        
 
         blank_image.GetComponent<Renderer>().enabled = true;
+        
+        endingResultUI.Show(allStageScores);
+        report_button.SetActive(true);
         mainmenu_button.SetActive(true);
         quit_button.SetActive(true);
     }

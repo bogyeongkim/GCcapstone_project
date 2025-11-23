@@ -30,7 +30,7 @@ public class ItemTransfer : MonoBehaviour, IPointerClickHandler
         DisplayCollectedItems();
         UnityEngine.Debug.Log("item display");
 
-        // DragonReaction ½ºÅ©¸³Æ® ºñÈ°¼ºÈ­
+        // DragonReaction ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­
         if (dragonReactionScript != null)
         {
             dragonReactionScript.enabled = false;
@@ -39,10 +39,10 @@ public class ItemTransfer : MonoBehaviour, IPointerClickHandler
 
     void DisplayCollectedItems()
     {
-        // ScoreManager¿¡¼­ ¼öÁýµÈ ¾ÆÀÌÅÛ °¡Á®¿À±â
+        // ScoreManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         List<GameObject> collectedItems = ScoreManager.instance.GetCollectedItems();
 
-        // collectedItems ¸®½ºÆ®¿Í itemSlot1ÀÌ À¯È¿ÇÑÁö È®ÀÎ
+        // collectedItems ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ itemSlot1ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (collectedItems != null && collectedItems.Count > 0 && itemSlot1 != null)
         {
             itemSlot1.sprite = collectedItems[0].GetComponent<SpriteRenderer>().sprite;
@@ -50,7 +50,7 @@ public class ItemTransfer : MonoBehaviour, IPointerClickHandler
             
             AddClickEvent(itemSlot1.gameObject, collectedItems[0], 1);
         }
-        // collectedItems ¸®½ºÆ®¿Í itemSlot2°¡ À¯È¿ÇÑÁö È®ÀÎ
+        // collectedItems ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ itemSlot2ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (collectedItems != null && collectedItems.Count > 1 && itemSlot2 != null)
         {
             itemSlot2.sprite = collectedItems[1].GetComponent<SpriteRenderer>().sprite;
@@ -69,7 +69,7 @@ public class ItemTransfer : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            trigger.triggers.Clear(); // Áßº¹ Æ®¸®°Å Ãß°¡ ¹æÁö
+            trigger.triggers.Clear(); // ï¿½ßºï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
         var entry = new EventTrigger.Entry
@@ -80,37 +80,39 @@ public class ItemTransfer : MonoBehaviour, IPointerClickHandler
         trigger.triggers.Add(entry);
     }
 
-    // ¾ÆÀÌÅÛ Å¬¸¯
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½
     public void OnItemClick(GameObject item, int slotNumber)
     {
         effect.Play();
 
-        // ¾ÆÀÌÅÛ ¿ëÀÇ À§Ä¡·Î ÀÌµ¿
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½
         item.transform.position = new Vector3(dragonPosition.position.x - 1.0f, dragonPosition.position.y + 2.9f, dragonPosition.position.z - 1.0f);
         
         UnityEngine.Debug.Log("Item clicked!");
 
         StartCoroutine(DeactivateItemAfterDelay(item, 1.0f));
 
-        // Å¬¸¯µÈ ½½·Ô ÃßÀû
+        // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (slotNumber == 1)
         {
             isItemSlot1Clicked = true;
+            itemSlot1.gameObject.SetActive(false);
             arrow1.SetActive(false);
         }
         else if (slotNumber == 2)
         {
             isItemSlot2Clicked = true;
+            itemSlot2.gameObject.SetActive(false);
             arrow2.SetActive(false);
         }
 
-        // µÎ ½½·ÔÀÌ ¸ðµÎ Å¬¸¯µÇ¾ú´ÂÁö
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½
         if (isItemSlot1Clicked && isItemSlot2Clicked)
         {
-            itemSlot1.gameObject.SetActive(false);
-            itemSlot2.gameObject.SetActive(false);
+            //itemSlot1.gameObject.SetActive(false);
+            //itemSlot2.gameObject.SetActive(false);
 
-            // DragonReaction ½ºÅ©¸³Æ® È°¼ºÈ­
+            // DragonReaction ï¿½ï¿½Å©ï¿½ï¿½Æ® È°ï¿½ï¿½È­
             if (dragonReactionScript != null)
             {
                 dragonReactionScript.enabled = true;
@@ -125,7 +127,7 @@ public class ItemTransfer : MonoBehaviour, IPointerClickHandler
         item.SetActive(false);
     }
 
-    // IPointerClickHandler ÀÎÅÍÆäÀÌ½º
+    // IPointerClickHandler ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½
     public void OnPointerClick(PointerEventData eventData)
     {
         UnityEngine.Debug.Log("Item clicked!");

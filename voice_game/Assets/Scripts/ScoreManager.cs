@@ -8,8 +8,8 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance; 
     
-    private int totalScore = 0; // ÃÑ Á¡¼ö
-    private Dictionary<int, int> stageScores = new Dictionary<int, int>(); // ½ºÅ×ÀÌÁöº° Á¡¼ö ÀúÀå
+    private int totalScore = 0; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private Dictionary<int, int> stageScores = new Dictionary<int, int>(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private List<GameObject> collectedItems = new List<GameObject>();
 
@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); 
-            // ¾À ¹Ù²î¾îµµ ¿ÀºêÁ§Æ® À¯Áö, ÃÊ¹Ý ÇÑ¹ø¸¸ ¿ÀºêÁ§Æ® »ý¼º&ÇÒ´ç, ÀÌÈÄ ¸ðµç ½ºÅ×ÀÌÁö¿¡¼­ Á¢±Ù °¡´É
+            // ï¿½ï¿½ ï¿½Ù²ï¿½îµµ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½, ï¿½Ê¹ï¿½ ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½&ï¿½Ò´ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
@@ -32,13 +32,13 @@ public class ScoreManager : MonoBehaviour
         totalScore += score;
     }
 
-    // Á¡¼ö Ãß°¡ (½ºÅ×ÀÌÁöº°·Î)
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
     public void AddScore2(int stage, int score)
     {
-        // ÃÑÁ¡¼ö¿¡ Á¡¼ö Ãß°¡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         totalScore += score;
 
-        // ½ºÅ×ÀÌÁöº° Á¡¼ö Ãß°¡ ¶Ç´Â ¾÷µ¥ÀÌÆ®
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         if (stageScores.ContainsKey(stage))
         {
             stageScores[stage] += score;
@@ -54,7 +54,7 @@ public class ScoreManager : MonoBehaviour
         return totalScore;
     }
 
-    // Æ¯Á¤ ½ºÅ×ÀÌÁö Á¡¼ö ¹ÝÈ¯
+    // Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
     public int GetStageScore(int stage)
     {
         if (stageScores.ContainsKey(stage))
@@ -63,20 +63,20 @@ public class ScoreManager : MonoBehaviour
         }
         else
         {
-            return 0; // ½ºÅ×ÀÌÁö Á¡¼ö°¡ ¾ø´Ù¸é 0 ¹ÝÈ¯
+            return 0; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ 0 ï¿½ï¿½È¯
         }
     }
 
-    // ¸ðµç ½ºÅ×ÀÌÁö Á¡¼ö ¹ÝÈ¯
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
     public Dictionary<int, int> GetAllStageScores()
     {
         return new Dictionary<int, int>(stageScores);
     }
 
-    // °ÔÀÓ °á°ú Ã³¸®
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
     public void CalculateResult()
     {
-        // ÃÑ Á¡¼ö¿¡ µû¸¥ °á°ú Ã³¸® ±¸Çö, ¿£µù¾À¿¡ ºÒ·¯¿Í¼­ Ã³¸®
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Í¼ï¿½ Ã³ï¿½ï¿½
         if (totalScore >= 10)
         {
             UnityEngine.Debug.Log("");
@@ -87,13 +87,13 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    // ¾ÆÀÌÅÛ ÀúÀå
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void AddItem(GameObject item)
     {
         collectedItems.Add(item);
     }
 
-    // ¾ÆÀÌÅÛ ºÒ·¯¿À±â
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
     public List<GameObject> GetCollectedItems()
     {
         return collectedItems;

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class DragonReaction : MonoBehaviour
 {
-    public GameObject reaction1; //1-3Á¡
-    public GameObject reaction2; //4-6Á¡
-    public GameObject reaction3; //7-9Á¡
+    public GameObject reaction1; //1-3ï¿½ï¿½
+    public GameObject reaction2; //4-6ï¿½ï¿½
+    public GameObject reaction3; //7-9ï¿½ï¿½
 
     public void React()
     {
