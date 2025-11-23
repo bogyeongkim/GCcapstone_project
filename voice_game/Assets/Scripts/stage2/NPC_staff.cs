@@ -83,7 +83,7 @@ public class NPC_staff : MonoBehaviour
 
     public AudioSource a_customer;
 
-    private bool isTalking = false;
+    private bool isConversationRunning = false;
 
 
 
@@ -109,20 +109,36 @@ public class NPC_staff : MonoBehaviour
 
     }
 
+    // 플레이어가 실제로 클릭했을 때만 호출되는 진입점
     private void OnMouseDown()
     {
-        // ������� �ֹ��Ͻðھ��? �Ҹ�&��ǳ�� ���
+        // 이미 대화/녹음이 진행 중이면 추가 클릭 무시
+        if (isConversationRunning)
+            return;
+
+        isConversationRunning = true;
+        StartConversationStep();
+    }
+
+    // 내부에서 “다음 턴으로 진행”할 때도 공통으로 쓰는 메서드
+    private void StartConversationStep()
+    {
+        // 원래 OnMouseDown 안에 있던 로직을 그대로 옮김
         arrow.GetComponent<Renderer>().enabled = false;
-        staff_bubble1.GetComponent<Renderer>().enabled = true; // ��ǳ��
+        staff_bubble1.GetComponent<Renderer>().enabled = true;
+
         if (turn == 0)
-            staff_line1.GetComponent<TextMeshProUGUI>().enabled = true; //�ؽ�Ʈ
+            staff_line1.GetComponent<TextMeshProUGUI>().enabled = true;
         else
             staff_line2.GetComponent<TextMeshProUGUI>().enabled = true;
-        if (turn == 0) 
-            staff_audio1.Play(); 
+
+        if (turn == 0)
+            staff_audio1.Play();
         else
             staff_audio2.Play();
-        StartCoroutine(StartRecordingAfterAudioEnds(staff_audio1.clip.length + 1.5f));//����� ����������
+
+        // 녹음 시작 코루틴은 그대로 유지
+        StartCoroutine(StartRecordingAfterAudioEnds(staff_audio1.clip.length + 1.0f));
     }
 
     private System.Collections.IEnumerator StartRecordingAfterAudioEnds(float waitTime)
@@ -185,7 +201,7 @@ public class NPC_staff : MonoBehaviour
                 if (turn == 1)
                 {
                     isSoft1 = true;
-                    OnMouseDown();
+                    StartConversationStep();
                 }
                 else if (turn == 2)
                 {
@@ -202,7 +218,7 @@ public class NPC_staff : MonoBehaviour
             {
                 if (turn == 1)
                 {
-                    OnMouseDown();
+                    StartConversationStep();
                 }
                 else if (turn == 2)
                 {
