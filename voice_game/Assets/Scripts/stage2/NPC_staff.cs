@@ -357,6 +357,8 @@ public class NPC_staff : MonoBehaviour
         turn = 0;
         isSoft1 = false;
         isSoft2 = false;
+
+        isConversationRunning = false;
     }
 
     IEnumerator Get_drink(float waitTime)

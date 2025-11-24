@@ -206,7 +206,7 @@ public class NPCMoveOnClick : MonoBehaviour
 
         foreach (float dbValue in DBL)
         {
-            if (dbValue > 37)
+            if (dbValue > 35)
             {
                 UnityEngine.Debug.Log("Loud detected: " + dbValue + " dB");
                 TriggerEvent_loud();
