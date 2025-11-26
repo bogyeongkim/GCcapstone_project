@@ -1839,8 +1839,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundAnalyzer: {fileID: 0}
-  minJumpPower: 2
-  maxJumpPower: 10
+  minJumpPower: 3
+  maxJumpPower: 13
   minJumpThreshold: 20
   maxDbReference: 70
   peakCheckDuration: 0.2

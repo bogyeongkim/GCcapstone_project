@@ -141,7 +141,7 @@ public class SoundAnalyzer : MonoBehaviour
                     return;
 
                 // === 자동 보정 적용 ===
-                float dbA = dbA_raw + calibrationOffsetDb;
+                float dbA = dbA_raw + calibrationOffsetDb - 10f;
 
                 if (dbA < 0f) dbA = 0f;
 
