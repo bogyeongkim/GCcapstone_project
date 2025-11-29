@@ -154,9 +154,9 @@ public class SoundAnalyzer2 : MonoBehaviour
                 if (!TryGetCurrentDbA(out float dbA_raw))
                     return;
 
-                
-                float dbA = dbA_raw; //+ calibrationOffsetDb
-                if (dbA < -calibrationOffsetDb + 8f) dbA = 0f;
+
+                float dbA = dbA_raw + calibrationOffsetDb + 5;
+                if (dbA_raw < -calibrationOffsetDb + 8f) dbA = 0f;
 
                 // 데시벨 값 리스트에 추가
                 dbValues.Add(dbA);

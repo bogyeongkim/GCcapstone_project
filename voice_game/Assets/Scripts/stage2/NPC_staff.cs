@@ -196,7 +196,7 @@ public class NPC_staff : MonoBehaviour
                 averageDb = sumDb / countDb; // 0�� �ƴ� ���� ��� ���ú� �� ���
                 UnityEngine.Debug.Log("average :"+averageDb);
             }
-            if (averageDb < 45) 
+            if (averageDb < 37) 
             {
                 if (turn == 1)
                 {
@@ -208,9 +208,8 @@ public class NPC_staff : MonoBehaviour
                     isSoft2 = true;
                     TriggerEvent_Wait();
                 }
-                
             }
-            else if (averageDb > 60) 
+            else if (averageDb > 55) 
             {
                 TriggerEvent_loud(); // turn �������
             }
